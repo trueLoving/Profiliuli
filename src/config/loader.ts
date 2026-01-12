@@ -15,6 +15,8 @@ import { contact } from './en/contact';
 import { projects as enProjects } from './en/projects';
 import { projects as zhProjects } from './zh/projects';
 import { spotify } from './en/apps';
+import { articles as enArticles } from './en/articles';
+import { articles as zhArticles } from './zh/articles';
 
 // Localized configs for English
 import { personal as enPersonal } from './en/personal';
@@ -63,6 +65,7 @@ export function getUserConfig(locale: Locale = 'en'): UserConfig {
     skills: isZh ? zhSkills : enSkills,
     experience: isZh ? zhExperience : enExperience,
     projects: isZh ? zhProjects : enProjects,
+    articles: isZh ? zhArticles : enArticles,
   } as const;
 }
 

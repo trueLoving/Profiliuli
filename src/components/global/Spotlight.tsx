@@ -25,6 +25,7 @@ export interface SpotlightProps {
     openNotesSection: (section: 'education' | 'experience' | 'courses' | 'skills') => void;
     openGitHub: () => void;
     openResume: () => void;
+    openArticles?: () => void;
     showTutorial: () => void;
     closeAllWindows: () => void;
     shuffleBackground: () => void;
@@ -206,6 +207,18 @@ export default function Spotlight({ isOpen, onClose, actions }: SpotlightProps) 
         icon: <IoDocumentTextOutline className="text-gray-300" />,
         action: actions.openResume,
       },
+      ...(actions.openArticles
+        ? [
+            {
+              id: 'action:articles',
+              title: 'Open Articles',
+              subtitle: 'Browse my recent articles',
+              category: 'Actions',
+              icon: <FaRegFileAlt className="text-gray-300" />,
+              action: actions.openArticles,
+            },
+          ]
+        : []),
       {
         id: 'action:tutorial',
         title: 'Show Tutorial',
@@ -231,6 +244,30 @@ export default function Spotlight({ isOpen, onClose, actions }: SpotlightProps) 
               category: 'Links',
               icon: <FaLinkedin className="text-gray-300" />,
               action: () => window.open(userConfig.social.linkedin!, '_blank'),
+            },
+          ]
+        : []),
+      ...(userConfig.social.medium
+        ? [
+            {
+              id: 'link:medium',
+              title: 'Open Medium',
+              subtitle: userConfig.social.medium,
+              category: 'Links',
+              icon: <span className="text-gray-300 font-bold">M</span>,
+              action: () => window.open(userConfig.social.medium!, '_blank'),
+            },
+          ]
+        : []),
+      ...(userConfig.social.juejin
+        ? [
+            {
+              id: 'link:juejin',
+              title: 'Open Juejin',
+              subtitle: userConfig.social.juejin,
+              category: 'Links',
+              icon: <span className="text-gray-300">掘</span>,
+              action: () => window.open(userConfig.social.juejin!, '_blank'),
             },
           ]
         : []),

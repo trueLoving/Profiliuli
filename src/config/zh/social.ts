@@ -1,5 +1,5 @@
 /**
- * Social media links configuration
+ * Social media links configuration (Chinese)
  * Add your social media profiles here
  */
 

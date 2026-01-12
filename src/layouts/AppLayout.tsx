@@ -1,4 +1,5 @@
 import { useEffect, useReducer, useState } from 'react';
+import ArticlesViewer from '../components/global/ArticlesViewer';
 import DesktopDock from '../components/global/DesktopDock';
 import GitHubViewer from '../components/global/GitHubViewer';
 import MacTerminal from '../components/global/MacTerminal';
@@ -18,7 +19,7 @@ import type { AppLayoutProps } from '../types';
 
 export default function Desktop({ initialBg, backgroundMap }: AppLayoutProps) {
   const [currentBg, setCurrentBg] = useState<string>(initialBg);
-  type App = 'terminal' | 'notes' | 'github' | 'resume' | 'spotify';
+  type App = 'terminal' | 'notes' | 'github' | 'resume' | 'spotify' | 'articles';
   type State = { windows: Record<App, boolean> };
   type Action = { type: 'OPEN' | 'CLOSE' | 'TOGGLE'; app: App } | { type: 'CLOSE_ALL' };
 
@@ -32,7 +33,7 @@ export default function Desktop({ initialBg, backgroundMap }: AppLayoutProps) {
         return { windows: { ...state.windows, [action.app]: !state.windows[action.app] } };
       case 'CLOSE_ALL':
         return {
-          windows: { terminal: false, notes: false, github: false, resume: false, spotify: false },
+          windows: { terminal: false, notes: false, github: false, resume: false, spotify: false, articles: false },
         };
       default:
         return state;
@@ -40,7 +41,7 @@ export default function Desktop({ initialBg, backgroundMap }: AppLayoutProps) {
   };
 
   const [state, dispatch] = useReducer(reducer, {
-    windows: { terminal: false, notes: false, github: false, resume: false, spotify: false },
+    windows: { terminal: false, notes: false, github: false, resume: false, spotify: false, articles: false },
   });
   const [showTutorial, setShowTutorial] = useState(false);
   const [isSpotlightOpen, setIsSpotlightOpen] = useState(false);
@@ -48,9 +49,10 @@ export default function Desktop({ initialBg, backgroundMap }: AppLayoutProps) {
   const [isMissionControlOpen, setIsMissionControlOpen] = useState(false);
   const [notesSection, setNotesSection] = useState<NotesSection | undefined>(undefined);
   const [selectedProjectId, setSelectedProjectId] = useState<string | undefined>(undefined);
+  const [selectedArticleId, setSelectedArticleId] = useState<string | undefined>(undefined);
   const [videoRef, setVideoRef] = useState<HTMLVideoElement | null>(null);
   const [focusedApp, setFocusedApp] = useState<
-    'terminal' | 'notes' | 'github' | 'resume' | null
+    'terminal' | 'notes' | 'github' | 'resume' | 'articles' | null
   >(null);
   const [videoLoaded, setVideoLoaded] = useState(false);
   const [_videoError, setVideoError] = useState<string | null>(null);
@@ -331,6 +333,9 @@ export default function Desktop({ initialBg, backgroundMap }: AppLayoutProps) {
           onGitHubClick={() => {
             handleAppOpen('github');
           }}
+          onArticlesClick={() => {
+            handleAppOpen('articles');
+          }}
           activeApps={activeApps}
           focusedApp={focusedApp}
         />
@@ -365,6 +370,14 @@ export default function Desktop({ initialBg, backgroundMap }: AppLayoutProps) {
           }}
           onFocus={() => setFocusedApp('terminal')}
         />
+        <ArticlesViewer
+          isOpen={state.windows.articles}
+          onClose={() => {
+            handleAppClose('articles');
+          }}
+          selectedArticleId={selectedArticleId}
+          onFocus={() => setFocusedApp('articles')}
+        />
         <Spotlight
           isOpen={isSpotlightOpen}
           onClose={() => setIsSpotlightOpen(false)}
@@ -374,6 +387,7 @@ export default function Desktop({ initialBg, backgroundMap }: AppLayoutProps) {
             openNotesSection: s => openNotesSection(s as NotesSection),
             openGitHub: () => handleAppOpen('github'),
             openResume: () => handleAppOpen('resume'),
+            openArticles: () => handleAppOpen('articles'),
             showTutorial: resetTutorial,
             closeAllWindows,
             shuffleBackground,

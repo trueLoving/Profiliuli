@@ -1,5 +1,5 @@
 import React, { useEffect } from 'react';
-import { BsGithub, BsStickyFill, BsFilePdf } from 'react-icons/bs';
+import { BsGithub, BsStickyFill, BsFilePdf, BsBook } from 'react-icons/bs';
 import { RiTerminalFill } from 'react-icons/ri';
 import { BsSpotify } from 'react-icons/bs';
 
@@ -12,9 +12,10 @@ interface MissionControlProps {
     github: boolean;
     resume: boolean;
     spotify: boolean;
+    articles: boolean;
   };
-  onAppClick: (app: 'terminal' | 'notes' | 'github' | 'resume' | 'spotify') => void;
-  onAppClose: (app: 'terminal' | 'notes' | 'github' | 'resume' | 'spotify') => void;
+  onAppClick: (app: 'terminal' | 'notes' | 'github' | 'resume' | 'spotify' | 'articles') => void;
+  onAppClose: (app: 'terminal' | 'notes' | 'github' | 'resume' | 'spotify' | 'articles') => void;
 }
 
 export default function MissionControl({
@@ -69,6 +70,13 @@ export default function MissionControl({
       icon: BsFilePdf,
       color: 'from-red-600 to-red-400',
       active: activeApps.resume,
+    },
+    {
+      id: 'articles' as const,
+      name: 'Articles',
+      icon: BsBook,
+      color: 'from-blue-600 to-blue-400',
+      active: activeApps.articles,
     },
     {
       id: 'spotify' as const,
