@@ -1,5 +1,5 @@
 import { useState, useEffect, useRef } from 'react';
-import { BsGithub, BsFilePdf, BsStickyFill, BsLinkedin } from 'react-icons/bs';
+import { BsGithub, BsFilePdf, BsStickyFill, BsLinkedin, BsBook } from 'react-icons/bs';
 import { IoIosCall, IoIosMail } from 'react-icons/io';
 import { FaLink } from 'react-icons/fa';
 import ResumeViewer from './ResumeViewer';
@@ -11,20 +11,23 @@ interface DesktopDockProps {
   onTerminalClick: () => void;
   onNotesClick: () => void;
   onGitHubClick: () => void;
+  onArticlesClick?: () => void;
   activeApps: {
     terminal: boolean;
     notes: boolean;
     github: boolean;
     resume: boolean;
     spotify: boolean;
+    articles: boolean;
   };
-  focusedApp?: 'terminal' | 'notes' | 'github' | 'resume' | null;
+  focusedApp?: 'terminal' | 'notes' | 'github' | 'resume' | 'articles' | null;
 }
 
 const DesktopDock = ({
   onTerminalClick,
   onNotesClick,
   onGitHubClick,
+  onArticlesClick,
   activeApps,
   focusedApp,
 }: DesktopDockProps) => {
@@ -127,6 +130,28 @@ const DesktopDock = ({
           <BsGithub size={20} />
           <span>{t('toolbar.github')}</span>
         </a>
+        {userConfig.social.medium && (
+          <a
+            href={userConfig.social.medium}
+            target="_blank"
+            rel="noopener noreferrer"
+            className="flex items-center gap-2 text-gray-300 hover:text-white"
+          >
+            <span className="text-lg font-bold">M</span>
+            <span>{t('toolbar.medium')}</span>
+          </a>
+        )}
+        {userConfig.social.juejin && (
+          <a
+            href={userConfig.social.juejin}
+            target="_blank"
+            rel="noopener noreferrer"
+            className="flex items-center gap-2 text-gray-300 hover:text-white"
+          >
+            <span className="text-lg">掘</span>
+            <span>{t('toolbar.juejin')}</span>
+          </a>
+        )}
         <a
           href={`mailto:${userConfig.contact.email}`}
           className="flex items-center gap-2 text-gray-300 hover:text-white"
@@ -175,6 +200,19 @@ const DesktopDock = ({
       active: activeApps.resume,
       isFocused: focusedApp === 'resume',
     },
+    ...(onArticlesClick
+      ? [
+          {
+            id: 'articles',
+            label: t('dock.articles'),
+            onClick: onArticlesClick,
+            icon: BsBook,
+            color: 'from-blue-600 to-blue-400',
+            active: activeApps.articles,
+            isFocused: focusedApp === 'articles',
+          },
+        ]
+      : []),
     {
       id: 'links',
       label: t('dock.links'),

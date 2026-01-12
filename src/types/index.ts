@@ -101,6 +101,8 @@ export interface Experience {
 export interface SocialLinks {
   github: string;
   linkedin?: string;
+  medium?: string;
+  juejin?: string;
 }
 
 export interface ContactInfo {
@@ -183,6 +185,7 @@ export interface UserConfig {
   skills: readonly string[];
   experience: readonly Experience[];
   projects: readonly Project[];
+  articles?: readonly Article[];
 }
 
 // ============================================
@@ -238,7 +241,7 @@ export interface ChatHistory {
 // App State Types
 // ============================================
 
-export type AppId = 'terminal' | 'notes' | 'github' | 'resume' | 'spotify';
+export type AppId = 'terminal' | 'notes' | 'github' | 'resume' | 'spotify' | 'articles';
 
 export interface ActiveApps {
   terminal: boolean;
@@ -246,4 +249,25 @@ export interface ActiveApps {
   github: boolean;
   resume: boolean;
   spotify: boolean;
+  articles: boolean;
+}
+
+// ============================================
+// Article Types
+// ============================================
+
+export interface Article {
+  id: string;
+  title: string;
+  description: string;
+  content: string; // Markdown content
+  publishDate: string;
+  tags: readonly string[];
+  platforms?: {
+    juejin?: { url: string; views?: number; likes?: number };
+    medium?: { url: string; views?: number; claps?: number };
+    wechat?: { url: string; views?: number; likes?: number };
+  };
+  readTime?: number; // Reading time in minutes
+  coverImage?: string;
 }

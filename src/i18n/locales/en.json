@@ -35,6 +35,8 @@
     "shuffleBackground": "Shuffle Background",
     "github": "GitHub",
     "linkedin": "LinkedIn",
+    "medium": "Medium",
+    "juejin": "Juejin",
     "email": "Email",
     "copyEmail": "Copy Email",
     "copyPhone": "Copy Phone",
@@ -121,6 +123,7 @@
     "notes": "Notes",
     "github": "GitHub",
     "resume": "Resume",
+    "articles": "Articles",
     "contact": "Contact",
     "links": "Links"
   },

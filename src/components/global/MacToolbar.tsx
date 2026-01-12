@@ -229,6 +229,24 @@ export default function MacToolbar({
             },
           ]
         : []),
+      ...(userConfig.social.medium
+        ? [
+            {
+              label: t('toolbar.medium'),
+              icon: <span className="font-bold">M</span>,
+              action: () => window.open(userConfig.social.medium!, '_blank'),
+            },
+          ]
+        : []),
+      ...(userConfig.social.juejin
+        ? [
+            {
+              label: t('toolbar.juejin'),
+              icon: <span>掘</span>,
+              action: () => window.open(userConfig.social.juejin!, '_blank'),
+            },
+          ]
+        : []),
       {
         label: t('toolbar.email'),
         icon: <FaEnvelope size={16} />,

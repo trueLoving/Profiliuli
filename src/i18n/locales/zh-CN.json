@@ -35,6 +35,8 @@
     "shuffleBackground": "切换背景",
     "github": "GitHub",
     "linkedin": "LinkedIn",
+    "medium": "Medium",
+    "juejin": "掘金",
     "email": "邮箱",
     "copyEmail": "复制邮箱",
     "copyPhone": "复制电话",
@@ -121,6 +123,7 @@
     "notes": "笔记",
     "github": "GitHub",
     "resume": "简历",
+    "articles": "文章",
     "contact": "联系",
     "links": "链接"
   },
@@ -146,6 +149,12 @@
     "send": "发送",
     "thinking": "思考中...",
     "error": "发送消息失败。请重试。"
+  },
+  "articles": {
+    "title": "文章",
+    "myArticles": "我的文章",
+    "noArticles": "暂无文章。",
+    "minRead": "分钟阅读"
   },
   "language": {
     "switch": "切换语言",
