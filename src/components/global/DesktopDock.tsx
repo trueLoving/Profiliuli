@@ -152,6 +152,17 @@ const DesktopDock = ({
             <span>{t('toolbar.juejin')}</span>
           </a>
         )}
+        {userConfig.social.dailydev && (
+          <a
+            href={userConfig.social.dailydev}
+            target="_blank"
+            rel="noopener noreferrer"
+            className="flex items-center gap-2 text-gray-300 hover:text-white"
+          >
+            <span className="text-lg font-bold">d</span>
+            <span>{t('toolbar.dailydev')}</span>
+          </a>
+        )}
         <a
           href={`mailto:${userConfig.contact.email}`}
           className="flex items-center gap-2 text-gray-300 hover:text-white"
