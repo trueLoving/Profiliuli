@@ -271,6 +271,18 @@ export default function Spotlight({ isOpen, onClose, actions }: SpotlightProps) 
             },
           ]
         : []),
+      ...(userConfig.social.dailydev
+        ? [
+            {
+              id: 'link:dailydev',
+              title: 'Open daily.dev',
+              subtitle: userConfig.social.dailydev,
+              category: 'Links',
+              icon: <span className="text-gray-300 font-bold">d</span>,
+              action: () => window.open(userConfig.social.dailydev!, '_blank'),
+            },
+          ]
+        : []),
       {
         id: 'link:resume',
         title: 'Open Resume (PDF URL)',

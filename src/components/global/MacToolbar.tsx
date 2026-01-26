@@ -247,6 +247,15 @@ export default function MacToolbar({
             },
           ]
         : []),
+      ...(userConfig.social.dailydev
+        ? [
+            {
+              label: t('toolbar.dailydev'),
+              icon: <span className="font-bold">d</span>,
+              action: () => window.open(userConfig.social.dailydev!, '_blank'),
+            },
+          ]
+        : []),
       {
         label: t('toolbar.email'),
         icon: <FaEnvelope size={16} />,

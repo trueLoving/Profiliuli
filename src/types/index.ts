@@ -103,6 +103,7 @@ export interface SocialLinks {
   linkedin?: string;
   medium?: string;
   juejin?: string;
+  dailydev?: string;
 }
 
 export interface ContactInfo {
