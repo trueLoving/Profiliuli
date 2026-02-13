@@ -19,13 +19,14 @@ export interface BackgroundConfig {
 export const backgroundConfig: BackgroundConfig = {
   images: [],
   videos: [
+    '/background/video/Honkai-Star-Rail-QHD.mp4',
     '/background/video/Toy-Aeroplane-4K.mp4',
     '/background/video/Glowing-Star-Girl-4096x2160.mp4',
   ],
   // Only set default images if they exist in the images array
   defaultOgImage: undefined,
   defaultPreloadImage: undefined,
-  defaultPreloadVideo: '/background/video/Glowing-Star-Girl-4096x2160.mp4',
+  defaultPreloadVideo: '/background/video/Honkai-Star-Rail-QHD.mp4',
 };
 
 /**

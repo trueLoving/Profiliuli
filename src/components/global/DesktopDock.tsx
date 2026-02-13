@@ -1,5 +1,5 @@
 import { useState, useEffect, useRef } from 'react';
-import { BsGithub, BsFilePdf, BsStickyFill, BsLinkedin, BsBook } from 'react-icons/bs';
+import { BsGithub, BsFilePdf, BsStickyFill, BsLinkedin } from 'react-icons/bs';
 import { IoIosCall, IoIosMail } from 'react-icons/io';
 import { FaLink } from 'react-icons/fa';
 import ResumeViewer from './ResumeViewer';
@@ -11,23 +11,20 @@ interface DesktopDockProps {
   onTerminalClick: () => void;
   onNotesClick: () => void;
   onGitHubClick: () => void;
-  onArticlesClick?: () => void;
   activeApps: {
     terminal: boolean;
     notes: boolean;
     github: boolean;
     resume: boolean;
     spotify: boolean;
-    articles: boolean;
   };
-  focusedApp?: 'terminal' | 'notes' | 'github' | 'resume' | 'articles' | null;
+  focusedApp?: 'terminal' | 'notes' | 'github' | 'resume' | null;
 }
 
 const DesktopDock = ({
   onTerminalClick,
   onNotesClick,
   onGitHubClick,
-  onArticlesClick,
   activeApps,
   focusedApp,
 }: DesktopDockProps) => {
@@ -211,19 +208,6 @@ const DesktopDock = ({
       active: activeApps.resume,
       isFocused: focusedApp === 'resume',
     },
-    ...(onArticlesClick
-      ? [
-          {
-            id: 'articles',
-            label: t('dock.articles'),
-            onClick: onArticlesClick,
-            icon: BsBook,
-            color: 'from-blue-600 to-blue-400',
-            active: activeApps.articles,
-            isFocused: focusedApp === 'articles',
-          },
-        ]
-      : []),
     {
       id: 'links',
       label: t('dock.links'),

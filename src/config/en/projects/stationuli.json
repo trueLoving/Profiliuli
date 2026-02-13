@@ -3,6 +3,8 @@
   "title": "Stationuli",
   "description": "Fully offline P2P file transfer and device control solution built with Rust and Tauri",
   "repoUrl": "https://github.com/trueLoving/Stationuli",
+  "designDocUrl": "https://github.com/trueLoving/Stationuli/tree/main/.github/02-design",
+
   "liveUrl": "https://github.com/trueLoving/Stationuli/releases/tag/v0.0.1",
   "techStack": ["React", "TypeScript", "Tailwind CSS", "Tauri", "Rust"],
   "highlights": [

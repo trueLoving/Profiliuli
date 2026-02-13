@@ -4,6 +4,7 @@ import {
   FaExternalLinkAlt,
   FaChevronLeft,
   FaLink,
+  FaFileAlt,
 } from 'react-icons/fa';
 import { useUserConfig } from '../../config/hooks';
 import { useI18n } from '../../i18n/context';
@@ -148,7 +149,7 @@ const GitHubViewer = ({ isOpen, onClose, selectedProjectId, onFocus }: GitHubVie
                           </span>
                         ))}
                       </div>
-                      <div className="flex gap-4">
+                      <div className="flex flex-wrap gap-4">
                         <a
                           href={project.repoUrl}
                           target="_blank"
@@ -169,6 +170,18 @@ const GitHubViewer = ({ isOpen, onClose, selectedProjectId, onFocus }: GitHubVie
                           >
                             <FaExternalLinkAlt />
                             <span>{t('projects.liveDemo')}</span>
+                          </a>
+                        )}
+                        {project.designDocUrl && (
+                          <a
+                            href={project.designDocUrl}
+                            target="_blank"
+                            rel="noopener noreferrer"
+                            className="flex items-center gap-2 text-sm hover:text-amber-400 text-gray-300"
+                            onClick={e => e.stopPropagation()}
+                          >
+                            <FaFileAlt />
+                            <span>{t('projects.designDoc')}</span>
                           </a>
                         )}
                       </div>
@@ -192,7 +205,7 @@ const GitHubViewer = ({ isOpen, onClose, selectedProjectId, onFocus }: GitHubVie
                     <div>
                       <div className="flex items-start justify-between gap-4 mb-2">
                         <h3 className="text-2xl font-bold text-gray-200 flex-1">{selectedProject.title}</h3>
-                        <div className="flex items-center gap-2 flex-shrink-0">
+                        <div className="flex flex-wrap items-center gap-2 flex-shrink-0">
                           {selectedProject.repoUrl && (
                             <a
                               href={selectedProject.repoUrl}
@@ -215,6 +228,18 @@ const GitHubViewer = ({ isOpen, onClose, selectedProjectId, onFocus }: GitHubVie
                             >
                               <FaLink />
                               <span className="hidden sm:inline">{t('projects.liveDemo')}</span>
+                            </a>
+                          )}
+                          {selectedProject.designDocUrl && (
+                            <a
+                              href={selectedProject.designDocUrl}
+                              target="_blank"
+                              rel="noopener noreferrer"
+                              className="flex items-center gap-1.5 text-sm hover:text-amber-400 text-gray-300 hover:bg-gray-700/50 px-3 py-1.5 rounded-lg transition-colors"
+                              title={t('projects.designDoc')}
+                            >
+                              <FaFileAlt />
+                              <span className="hidden sm:inline">{t('projects.designDoc')}</span>
                             </a>
                           )}
                         </div>
@@ -383,7 +408,7 @@ const GitHubViewer = ({ isOpen, onClose, selectedProjectId, onFocus }: GitHubVie
                   </span>
                 ))}
               </div>
-              <div className="flex gap-3">
+              <div className="flex flex-wrap gap-3">
                 <button
                   className="text-sm text-blue-400 hover:text-blue-300"
                   onClick={() => {
@@ -410,6 +435,16 @@ const GitHubViewer = ({ isOpen, onClose, selectedProjectId, onFocus }: GitHubVie
                     className="text-sm text-green-400 hover:text-green-300"
                   >
                     {t('projects.openLive')}
+                  </a>
+                )}
+                {quickLook!.designDocUrl && (
+                  <a
+                    href={quickLook!.designDocUrl}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="text-sm text-amber-400 hover:text-amber-300"
+                  >
+                    {t('projects.designDoc')}
                   </a>
                 )}
               </div>

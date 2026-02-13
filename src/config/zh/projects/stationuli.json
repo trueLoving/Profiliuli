@@ -4,6 +4,7 @@
   "description": "完全离线的 P2P 文件传输和设备控制解决方案，使用 Rust 和 Tauri 构建",
   "repoUrl": "https://github.com/trueLoving/Stationuli",
   "liveUrl": "https://github.com/trueLoving/Stationuli/releases/tag/v0.0.1",
+  "designDocUrl": "https://github.com/trueLoving/Stationuli/tree/main/.github/02-design",
   "techStack": ["React", "TypeScript", "Tailwind CSS", "Tauri", "Rust"],
   "highlights": [
     "🔒 隐私优先：完全离线，无云依赖，端到端加密",

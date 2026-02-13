@@ -183,6 +183,7 @@
     "visitLiveSite": "访问在线网站",
     "openDetails": "查看详情",
     "openRepo": "打开代码库",
-    "openLive": "打开在线网站"
+    "openLive": "打开在线网站",
+    "designDoc": "设计文档"
   }
 }

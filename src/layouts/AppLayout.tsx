@@ -333,11 +333,16 @@ export default function Desktop({ initialBg, backgroundMap }: AppLayoutProps) {
           onGitHubClick={() => {
             handleAppOpen('github');
           }}
-          onArticlesClick={() => {
-            handleAppOpen('articles');
+          activeApps={{
+            terminal: activeApps.terminal,
+            notes: activeApps.notes,
+            github: activeApps.github,
+            resume: activeApps.resume,
+            spotify: activeApps.spotify,
           }}
-          activeApps={activeApps}
-          focusedApp={focusedApp}
+          focusedApp={
+            focusedApp === 'articles' ? null : focusedApp
+          }
         />
 
         <NotesApp

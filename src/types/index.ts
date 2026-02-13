@@ -37,6 +37,8 @@ export interface Project {
   description: string;
   repoUrl: string;
   liveUrl?: string;
+  /** Link to design document (e.g. GitHub docs or external design doc site) */
+  designDocUrl?: string;
   techStack: readonly string[];
   structure?: ProjectStructure;
   images: readonly Image[];

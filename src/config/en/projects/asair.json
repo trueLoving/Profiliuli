@@ -1,0 +1,76 @@
+{
+  "id": "asair",
+  "title": "ASAIR",
+  "description": "AI 智能客服一体化平台，包含运营/管理后台前端（React）、管理后台后端（Flask）、AI 服务端（FastAPI），集成 Telegram/Chatwoot/Dify，支持多租户、多渠道消息聚合、智能对话与人机协作。",
+  "repoUrl": "",
+  "liveUrl": "",
+  "designDocUrl": "",
+  "techStack": [
+    "React",
+    "Vite",
+    "TypeScript",
+    "Tailwind CSS",
+    "Zustand",
+    "i18next",
+    "Flask",
+    "SQLAlchemy",
+    "PostgreSQL",
+    "FastAPI",
+    "Redis",
+    "Telethon",
+    "Dify",
+    "Chatwoot",
+    "faster-whisper"
+  ],
+  "highlights": [
+    "🖥️ 三端一体：管理员前端（React + Vite）、管理后端（Flask）、AI 服务端（FastAPI）分工清晰、协同工作",
+    "🤖 智能对话：集成 Dify AI，支持 Prompt 工程、知识库、自动标签与转人工规则",
+    "📱 多渠道接入：Telegram、WhatsApp、Line 等社交账号管理，消息同步至 Chatwoot 统一处理",
+    "🎤 本地语音转写：faster-whisper 本地多语言语音转文字，无需云服务",
+    "👥 多租户与双角色：平台管理员与租户管理员体系，租户隔离与 JWT 鉴权",
+    "⚡ 消息防抖与聚合：Redis 队列、会话锁、AI 回复双写 Chatwoot + Telegram"
+  ],
+  "challenges": [
+    "多租户下 Telegram 账号动态注册与配置从 Redis 同步到 AI 服务端",
+    "消息流在 Telegram ↔ Chatwoot ↔ Dify 间的防抖、会话锁定与双写一致性",
+    "语音消息本地转写与多语言检测集成到现有消息管道",
+    "平台/租户双角色前端路由与权限、后端 API 鉴权统一"
+  ],
+  "metrics": {
+    "subprojects": "3",
+    "adminFrontendPort": "9099",
+    "adminBackendPort": "8100",
+    "aiServerPort": "8000",
+    "backendTestCases": "32+",
+    "supportedLocales": "3"
+  },
+  "subprojects": [
+    {
+      "id": "asair-admin-frontend",
+      "name": "管理员前端",
+      "description": "运营/管理后台前端，平台管理与商户管理双角色，Dashboard、账号管理、CDP、AI 配置、开发者集成、系统设置。",
+      "techStack": ["React", "Vite", "React Router", "Axios", "Zustand", "i18next", "Tailwind CSS", "Vitest", "Lucide React"],
+      "port": 9099
+    },
+    {
+      "id": "asair-admin-backend",
+      "name": "管理后端",
+      "description": "运营/管理后台 API 服务，租户管理、社交平台账号管理、JWT 鉴权、密码策略、健康检查与 Docker 部署。",
+      "techStack": ["Flask", "SQLAlchemy", "PostgreSQL", "PyJWT", "bcrypt", "Gunicorn", "Alembic", "pytest"],
+      "port": 8100
+    },
+    {
+      "id": "asair-ai-server",
+      "name": "AI 服务端",
+      "description": "智能客服后端，Telegram 消息接收与转发、Chatwoot 同步、Dify 对话、消息聚合防抖、本地语音转写、多租户会话管理。",
+      "techStack": ["FastAPI", "Redis", "Telethon", "HTTPX", "faster-whisper", "PostgreSQL", "Uvicorn", "Prometheus"],
+      "port": 8000
+    }
+  ],
+  "images": [
+    {
+      "url": "/projects/asair/admin-frontend.webp",
+      "alt": "asair-admin-frontend"
+    }
+  ]
+}
