@@ -27,7 +27,15 @@ const GitHubViewer = ({ isOpen, onClose, selectedProjectId, onFocus }: GitHubVie
   const [activeImageIndex, setActiveImageIndex] = useState(0);
   const [quickLook, setQuickLook] = useState<Project | null>(null);
   const [demoVideoProject, setDemoVideoProject] = useState<Project | null>(null);
+  const [currentDemoIndex, setCurrentDemoIndex] = useState(0);
   const [imageLoadStates, setImageLoadStates] = useState<Record<string, boolean>>({});
+
+  /** Normalize to array: demoVideoUrls if present, else [demoVideoUrl] if present */
+  const getDemoVideoList = (project: Project): string[] => {
+    if (project.demoVideoUrls?.length) return [...project.demoVideoUrls];
+    if (project.demoVideoUrl) return [project.demoVideoUrl];
+    return [];
+  };
 
   /** Detect video URL type and return embed src for iframe, or null for direct <video> */
   const getDemoVideoEmbed = (url: string): { type: 'direct'; src: string } | { type: 'youtube' | 'vimeo'; embedSrc: string } => {
@@ -200,13 +208,14 @@ const GitHubViewer = ({ isOpen, onClose, selectedProjectId, onFocus }: GitHubVie
                             <span>{t('projects.designDoc')}</span>
                           </a>
                         )}
-                        {project.demoVideoUrl && (
+                        {getDemoVideoList(project).length > 0 && (
                           <button
                             type="button"
                             className="flex items-center gap-2 text-sm hover:text-rose-400 text-gray-300"
                             onClick={e => {
                               e.stopPropagation();
                               setDemoVideoProject(project);
+                              setCurrentDemoIndex(0);
                             }}
                           >
                             <FaPlayCircle />
@@ -271,12 +280,15 @@ const GitHubViewer = ({ isOpen, onClose, selectedProjectId, onFocus }: GitHubVie
                               <span className="hidden sm:inline">{t('projects.designDoc')}</span>
                             </a>
                           )}
-                          {selectedProject.demoVideoUrl && (
+                          {getDemoVideoList(selectedProject).length > 0 && (
                             <button
                               type="button"
                               className="flex items-center gap-1.5 text-sm hover:text-rose-400 text-gray-300 hover:bg-gray-700/50 px-3 py-1.5 rounded-lg transition-colors"
                               title={t('projects.demoVideo')}
-                              onClick={() => setDemoVideoProject(selectedProject)}
+                              onClick={() => {
+                                setDemoVideoProject(selectedProject);
+                                setCurrentDemoIndex(0);
+                              }}
                             >
                               <FaPlayCircle />
                               <span className="hidden sm:inline">{t('projects.demoVideo')}</span>
@@ -487,12 +499,13 @@ const GitHubViewer = ({ isOpen, onClose, selectedProjectId, onFocus }: GitHubVie
                     {t('projects.designDoc')}
                   </a>
                 )}
-                {quickLook!.demoVideoUrl && (
+                {getDemoVideoList(quickLook!).length > 0 && (
                   <button
                     type="button"
                     className="text-sm text-rose-400 hover:text-rose-300"
                     onClick={() => {
                       setDemoVideoProject(quickLook!);
+                      setCurrentDemoIndex(0);
                       setQuickLook(null);
                     }}
                   >
@@ -505,7 +518,7 @@ const GitHubViewer = ({ isOpen, onClose, selectedProjectId, onFocus }: GitHubVie
         </div>
       )}
 
-      {demoVideoProject?.demoVideoUrl && (
+      {demoVideoProject && getDemoVideoList(demoVideoProject).length > 0 && (
         <div
           className="fixed inset-0 z-[80] flex items-center justify-center p-4"
           role="dialog"
@@ -520,10 +533,37 @@ const GitHubViewer = ({ isOpen, onClose, selectedProjectId, onFocus }: GitHubVie
             className="relative w-full max-w-4xl rounded-xl border border-white/10 bg-gray-900/95 shadow-2xl overflow-hidden"
             onClick={e => e.stopPropagation()}
           >
-            <div className="flex items-center justify-between px-4 py-2 border-b border-white/10 bg-gray-800/50">
-              <h3 className="text-lg font-semibold text-white truncate pr-2">
-                {demoVideoProject.title} – {t('projects.demoVideo')}
-              </h3>
+            <div className="flex items-center justify-between gap-2 px-4 py-2 border-b border-white/10 bg-gray-800/50">
+              <div className="flex flex-wrap items-center gap-2 min-w-0 flex-1">
+                <h3 className="text-lg font-semibold text-white truncate">
+                  {demoVideoProject.title} – {t('projects.demoVideo')}
+                </h3>
+                {(() => {
+                  const list = getDemoVideoList(demoVideoProject);
+                  if (list.length <= 1) return null;
+                  return (
+                    <div className="flex gap-1 flex-shrink-0" role="tablist" aria-label={t('projects.demoVideo')}>
+                      {list.map((_, i) => (
+                        <button
+                          key={i}
+                          type="button"
+                          role="tab"
+                          aria-selected={i === currentDemoIndex}
+                          aria-label={`${t('projects.demoVideo')} ${i + 1}`}
+                          className={`px-2.5 py-1 rounded text-sm font-medium transition-colors ${
+                            i === currentDemoIndex
+                              ? 'bg-rose-500/80 text-white'
+                              : 'text-gray-300 hover:bg-gray-600/50 hover:text-white'
+                          }`}
+                          onClick={() => setCurrentDemoIndex(i)}
+                        >
+                          {i + 1}
+                        </button>
+                      ))}
+                    </div>
+                  );
+                })()}
+              </div>
               <button
                 type="button"
                 className="flex-shrink-0 text-gray-400 hover:text-white p-1 rounded"
@@ -535,11 +575,14 @@ const GitHubViewer = ({ isOpen, onClose, selectedProjectId, onFocus }: GitHubVie
             </div>
             <div className="relative aspect-video bg-black">
               {(() => {
-                const embed = getDemoVideoEmbed(demoVideoProject.demoVideoUrl!);
+                const list = getDemoVideoList(demoVideoProject);
+                const url = list[currentDemoIndex];
+                if (!url) return null;
+                const embed = getDemoVideoEmbed(url);
                 if (embed.type === 'direct') {
                   return (
                     <video
-                      key={demoVideoProject.id}
+                      key={`${demoVideoProject.id}-${currentDemoIndex}`}
                       className="w-full h-full object-contain"
                       controls
                       autoPlay
@@ -550,8 +593,8 @@ const GitHubViewer = ({ isOpen, onClose, selectedProjectId, onFocus }: GitHubVie
                 }
                 return (
                   <iframe
-                    key={demoVideoProject.id}
-                    title={t('projects.demoVideo')}
+                    key={`${demoVideoProject.id}-${currentDemoIndex}`}
+                    title={`${t('projects.demoVideo')} ${currentDemoIndex + 1}`}
                     className="absolute inset-0 w-full h-full"
                     src={embed.embedSrc}
                     allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"

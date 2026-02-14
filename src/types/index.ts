@@ -39,8 +39,10 @@ export interface Project {
   liveUrl?: string;
   /** Link to design document (e.g. GitHub docs or external design doc site) */
   designDocUrl?: string;
-  /** URL to demo video (direct .mp4/.webm or YouTube/Vimeo watch URL for in-page playback) */
+  /** Single demo video URL (deprecated in favor of demoVideoUrls; still supported) */
   demoVideoUrl?: string;
+  /** Multiple demo video URLs; user can switch between them in the demo modal */
+  demoVideoUrls?: readonly string[];
   techStack: readonly string[];
   structure?: ProjectStructure;
   images: readonly Image[];
