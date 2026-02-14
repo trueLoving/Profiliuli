@@ -24,6 +24,7 @@
     "bundleSize": "使用 Astro islands 优化",
     "seo": "完整的 SEO 优化，包含 meta 标签和 OpenGraph"
   },
+  "demoVideoUrl": "/projects/profiliuli/demo.mp4",
   "images": [
     {
       "url": "/projects/profiliuli/home.webp",

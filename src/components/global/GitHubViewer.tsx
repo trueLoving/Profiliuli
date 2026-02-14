@@ -5,6 +5,7 @@ import {
   FaChevronLeft,
   FaLink,
   FaFileAlt,
+  FaPlayCircle,
 } from 'react-icons/fa';
 import { useUserConfig } from '../../config/hooks';
 import { useI18n } from '../../i18n/context';
@@ -25,7 +26,22 @@ const GitHubViewer = ({ isOpen, onClose, selectedProjectId, onFocus }: GitHubVie
   const [showStructure, setShowStructure] = useState(false);
   const [activeImageIndex, setActiveImageIndex] = useState(0);
   const [quickLook, setQuickLook] = useState<Project | null>(null);
+  const [demoVideoProject, setDemoVideoProject] = useState<Project | null>(null);
   const [imageLoadStates, setImageLoadStates] = useState<Record<string, boolean>>({});
+
+  /** Detect video URL type and return embed src for iframe, or null for direct <video> */
+  const getDemoVideoEmbed = (url: string): { type: 'direct'; src: string } | { type: 'youtube' | 'vimeo'; embedSrc: string } => {
+    const lower = url.toLowerCase();
+    const youtubeMatch = url.match(/(?:youtube\.com\/watch\?v=|youtu\.be\/)([a-zA-Z0-9_-]+)/);
+    if (youtubeMatch) {
+      return { type: 'youtube', embedSrc: `https://www.youtube.com/embed/${youtubeMatch[1]}` };
+    }
+    const vimeoMatch = url.match(/vimeo\.com\/(?:video\/)?(\d+)/);
+    if (vimeoMatch) {
+      return { type: 'vimeo', embedSrc: `https://player.vimeo.com/video/${vimeoMatch[1]}` };
+    }
+    return { type: 'direct', src: url };
+  };
 
 
   const handleProjectClick = (project: Project) => {
@@ -184,6 +200,19 @@ const GitHubViewer = ({ isOpen, onClose, selectedProjectId, onFocus }: GitHubVie
                             <span>{t('projects.designDoc')}</span>
                           </a>
                         )}
+                        {project.demoVideoUrl && (
+                          <button
+                            type="button"
+                            className="flex items-center gap-2 text-sm hover:text-rose-400 text-gray-300"
+                            onClick={e => {
+                              e.stopPropagation();
+                              setDemoVideoProject(project);
+                            }}
+                          >
+                            <FaPlayCircle />
+                            <span>{t('projects.demoVideo')}</span>
+                          </button>
+                        )}
                       </div>
                     </div>
                   ))}
@@ -241,6 +270,17 @@ const GitHubViewer = ({ isOpen, onClose, selectedProjectId, onFocus }: GitHubVie
                               <FaFileAlt />
                               <span className="hidden sm:inline">{t('projects.designDoc')}</span>
                             </a>
+                          )}
+                          {selectedProject.demoVideoUrl && (
+                            <button
+                              type="button"
+                              className="flex items-center gap-1.5 text-sm hover:text-rose-400 text-gray-300 hover:bg-gray-700/50 px-3 py-1.5 rounded-lg transition-colors"
+                              title={t('projects.demoVideo')}
+                              onClick={() => setDemoVideoProject(selectedProject)}
+                            >
+                              <FaPlayCircle />
+                              <span className="hidden sm:inline">{t('projects.demoVideo')}</span>
+                            </button>
                           )}
                         </div>
                       </div>
@@ -447,7 +487,78 @@ const GitHubViewer = ({ isOpen, onClose, selectedProjectId, onFocus }: GitHubVie
                     {t('projects.designDoc')}
                   </a>
                 )}
+                {quickLook!.demoVideoUrl && (
+                  <button
+                    type="button"
+                    className="text-sm text-rose-400 hover:text-rose-300"
+                    onClick={() => {
+                      setDemoVideoProject(quickLook!);
+                      setQuickLook(null);
+                    }}
+                  >
+                    {t('projects.demoVideo')}
+                  </button>
+                )}
               </div>
+            </div>
+          </div>
+        </div>
+      )}
+
+      {demoVideoProject?.demoVideoUrl && (
+        <div
+          className="fixed inset-0 z-[80] flex items-center justify-center p-4"
+          role="dialog"
+          aria-modal="true"
+          aria-label={t('projects.demoVideo')}
+        >
+          <div
+            className="absolute inset-0 bg-black/70 backdrop-blur-sm"
+            onClick={() => setDemoVideoProject(null)}
+          />
+          <div
+            className="relative w-full max-w-4xl rounded-xl border border-white/10 bg-gray-900/95 shadow-2xl overflow-hidden"
+            onClick={e => e.stopPropagation()}
+          >
+            <div className="flex items-center justify-between px-4 py-2 border-b border-white/10 bg-gray-800/50">
+              <h3 className="text-lg font-semibold text-white truncate pr-2">
+                {demoVideoProject.title} – {t('projects.demoVideo')}
+              </h3>
+              <button
+                type="button"
+                className="flex-shrink-0 text-gray-400 hover:text-white p-1 rounded"
+                onClick={() => setDemoVideoProject(null)}
+                aria-label="Close"
+              >
+                ✕
+              </button>
+            </div>
+            <div className="relative aspect-video bg-black">
+              {(() => {
+                const embed = getDemoVideoEmbed(demoVideoProject.demoVideoUrl!);
+                if (embed.type === 'direct') {
+                  return (
+                    <video
+                      key={demoVideoProject.id}
+                      className="w-full h-full object-contain"
+                      controls
+                      autoPlay
+                      playsInline
+                      src={embed.src}
+                    />
+                  );
+                }
+                return (
+                  <iframe
+                    key={demoVideoProject.id}
+                    title={t('projects.demoVideo')}
+                    className="absolute inset-0 w-full h-full"
+                    src={embed.embedSrc}
+                    allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
+                    allowFullScreen
+                  />
+                );
+              })()}
             </div>
           </div>
         </div>
