@@ -6,6 +6,11 @@
   "liveUrl": "https://pixuli-web.vercel.app/",
   "designDocUrl": "https://github.com/trueLoving/Pixuli/tree/main/.github/02-design",
   "techStack": ["React", "TypeScript", "Tailwind CSS", "Electron", "React Native"],
+  "demoVideoUrls": [
+    "/projects/pixuli/demo-web.mp4",
+    "/projects/pixuli/demo-desktop.mp4",
+    "/projects/pixuli/demo-mobile.mp4"
+  ],
   "highlights": [
     "🚀 Performance: WebAssembly optimization reduced image processing time by 60%",
     "🤖 AI Integration: Automatic tag generation using machine learning models",

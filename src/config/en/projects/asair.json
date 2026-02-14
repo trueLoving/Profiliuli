@@ -7,20 +7,12 @@
   "designDocUrl": "",
   "techStack": [
     "React",
-    "Vite",
-    "TypeScript",
-    "Tailwind CSS",
     "Zustand",
-    "i18next",
     "Flask",
-    "SQLAlchemy",
     "PostgreSQL",
     "FastAPI",
-    "Redis",
-    "Telethon",
     "Dify",
-    "Chatwoot",
-    "faster-whisper"
+    "Chatwoot"
   ],
   "highlights": [
     "🖥️ 三端一体：管理员前端（React + Vite）、管理后端（Flask）、AI 服务端（FastAPI）分工清晰、协同工作",
