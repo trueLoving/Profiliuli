@@ -190,10 +190,22 @@ export interface UserConfig {
   education: readonly Education[];
   courses: readonly Course[];
   skills: readonly string[];
+  /** When set, NotesApp shows skills grouped by category (e.g. frontend, backend) */
+  skillsByCategory?: SkillsByCategory;
   experience: readonly Experience[];
   projects: readonly Project[];
   articles?: readonly Article[];
 }
+
+/** Single skill with optional level/years (for categorized display) */
+export interface SkillItem {
+  name: string;
+  level?: 'expert' | 'advanced' | 'intermediate' | 'learning';
+  years?: number;
+}
+
+/** Category key -> list of skills. Keys e.g. languages, frontend, backend, mobile, desktop, databases, devops, emerging */
+export type SkillsByCategory = Readonly<Record<string, readonly SkillItem[]>>;
 
 // ============================================
 // Component Prop Types

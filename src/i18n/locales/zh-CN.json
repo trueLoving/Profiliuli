@@ -106,7 +106,23 @@
     "skills": {
       "title": "技能",
       "intensityDescription": "强度显示技能在项目中的出现频率。",
-      "usedInProjects": "在 {count} 个项目中使用"
+      "usedInProjects": "在 {count} 个项目中使用",
+      "categories": {
+        "languages": "编程语言",
+        "frontend": "前端",
+        "backend": "后端",
+        "mobile": "移动端",
+        "desktop": "桌面端",
+        "databases": "数据库",
+        "devops": "DevOps",
+        "emerging": "新兴"
+      },
+      "level": {
+        "expert": "精通",
+        "advanced": "熟练",
+        "intermediate": "了解",
+        "learning": "学习中"
+      }
     },
     "menu": {
       "educationDescription": "查看我的教育背景和学历",
@@ -123,7 +139,7 @@
     "terminal": "终端",
     "notes": "笔记",
     "github": "GitHub",
-    "resume": "简历",
+    "resume": "简历 (PDF)",
     "articles": "文章",
     "contact": "联系",
     "links": "链接"

@@ -22,7 +22,7 @@ import { articles as zhArticles } from './zh/articles';
 import { personal as enPersonal } from './en/personal';
 import { education as enEducation, courses as enCourses } from './en/education';
 import { experience as enExperience } from './en/experience';
-import { skills as enSkills } from './en/skills';
+import { skills as enSkills, skillsByCategory as enSkillsByCategory } from './en/skills';
 import { seo as enSeo, theme as enTheme } from './en/site';
 import { resume as enResume } from './en/apps';
 
@@ -30,7 +30,7 @@ import { resume as enResume } from './en/apps';
 import { personal as zhPersonal } from './zh/personal';
 import { education as zhEducation, courses as zhCourses } from './zh/education';
 import { experience as zhExperience } from './zh/experience';
-import { skills as zhSkills } from './zh/skills';
+import { skills as zhSkills, skillsByCategory as zhSkillsByCategory } from './zh/skills';
 import { seo as zhSeo, theme as zhTheme } from './zh/site';
 import { resume as zhResume } from './zh/apps';
 
@@ -63,6 +63,7 @@ export function getUserConfig(locale: Locale = 'en'): UserConfig {
     education: isZh ? zhEducation : enEducation,
     courses: isZh ? zhCourses : enCourses,
     skills: isZh ? zhSkills : enSkills,
+    skillsByCategory: isZh ? zhSkillsByCategory : enSkillsByCategory,
     experience: isZh ? zhExperience : enExperience,
     projects: isZh ? zhProjects : enProjects,
     articles: isZh ? zhArticles : enArticles,

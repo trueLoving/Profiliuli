@@ -106,7 +106,23 @@
     "skills": {
       "title": "Skills",
       "intensityDescription": "Intensity shows how often a skill appears across my projects.",
-      "usedInProjects": "Used in {count} project(s)"
+      "usedInProjects": "Used in {count} project(s)",
+      "categories": {
+        "languages": "Languages",
+        "frontend": "Frontend",
+        "backend": "Backend",
+        "mobile": "Mobile",
+        "desktop": "Desktop",
+        "databases": "Databases",
+        "devops": "DevOps",
+        "emerging": "Emerging"
+      },
+      "level": {
+        "expert": "Expert",
+        "advanced": "Advanced",
+        "intermediate": "Intermediate",
+        "learning": "Learning"
+      }
     },
     "menu": {
       "educationDescription": "View my educational background and qualifications",
@@ -123,7 +139,7 @@
     "terminal": "Terminal",
     "notes": "Notes",
     "github": "GitHub",
-    "resume": "Resume",
+    "resume": "Resume (PDF)",
     "articles": "Articles",
     "contact": "Contact",
     "links": "Links"

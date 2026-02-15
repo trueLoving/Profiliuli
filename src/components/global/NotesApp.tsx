@@ -215,25 +215,79 @@ const NotesApp = ({ isOpen, onClose, section, onFocus }: NotesAppProps) => {
     </div>
   );
 
+  const SKILL_CATEGORY_ORDER = [
+    'languages',
+    'frontend',
+    'backend',
+    'mobile',
+    'desktop',
+    'databases',
+    'devops',
+    'emerging',
+  ] as const;
+
   const renderSkills = () => {
-    // Build a simple frequency map of how many projects use each skill
+    const skillsByCategory = userConfig.skillsByCategory;
     const freq: Record<string, number> = {};
     for (const p of userConfig.projects || []) {
-      for (const t of p.techStack) {
-        freq[t] = (freq[t] || 0) + 1;
+      for (const tech of p.techStack) {
+        freq[tech] = (freq[tech] || 0) + 1;
       }
     }
     const max = Object.values(freq).reduce((a, b) => Math.max(a, b), 1);
-    const getIntensity = (skill: string) => {
-      const f = freq[skill] || 0;
+    const getIntensity = (skillName: string) => {
+      const f = freq[skillName] || 0;
       const ratio = Math.min(1, f / max);
-      // Interpolate from gray-700 to green-600
-      const base = 'bg-gray-700';
       if (ratio > 0.66) return 'bg-green-600/70';
       if (ratio > 0.33) return 'bg-green-600/40';
       if (ratio > 0) return 'bg-green-600/20';
-      return base;
+      return 'bg-gray-700';
     };
+
+    if (skillsByCategory && Object.keys(skillsByCategory).length > 0) {
+      return (
+        <div className="space-y-6">
+          {renderBackButton()}
+          <h2 className="text-2xl font-bold text-gray-200 mb-2">{t('notes.skills.title')}</h2>
+          <p className="text-sm text-gray-400 mb-4">{t('notes.skills.intensityDescription')}</p>
+          <div className="space-y-6">
+            {SKILL_CATEGORY_ORDER.map((catKey) => {
+              const list = skillsByCategory[catKey];
+              if (!list || list.length === 0) return null;
+              const categoryLabelKey = `notes.skills.categories.${catKey}`;
+              const label = t(categoryLabelKey);
+              return (
+                <div key={catKey} className="bg-gray-800/50 p-4 rounded-xl shadow-lg">
+                  <h3 className="text-sm font-semibold text-gray-400 uppercase tracking-wide mb-3">
+                    {label}
+                  </h3>
+                  <div className="flex flex-wrap gap-2">
+                    {list.map((item, index) => (
+                      <span
+                        key={`${catKey}-${index}`}
+                        className={`inline-flex items-center gap-2 px-3 py-2 rounded-lg text-sm text-gray-200 ${getIntensity(item.name)} hover:bg-green-500/40 transition-colors`}
+                        title={t('notes.skills.usedInProjects').replace('{count}', `${freq[item.name] || 0}`)}
+                      >
+                        <span className="font-medium">{item.name}</span>
+                        {item.level && (
+                          <span className="text-xs px-1.5 py-0.5 rounded bg-gray-600/80 text-gray-300">
+                            {t(`notes.skills.level.${item.level}`)}
+                          </span>
+                        )}
+                        {item.years != null && (
+                          <span className="text-xs text-gray-400">{item.years}y</span>
+                        )}
+                      </span>
+                    ))}
+                  </div>
+                </div>
+              );
+            })}
+          </div>
+        </div>
+      );
+    }
+
     return (
       <div className="space-y-6">
         {renderBackButton()}
@@ -246,9 +300,7 @@ const NotesApp = ({ isOpen, onClose, section, onFocus }: NotesAppProps) => {
                 key={index}
                 className={`px-3 py-2 rounded text-sm text-gray-100 text-left transition-colors ${getIntensity(skill)} hover:bg-green-500/60`}
                 title={t('notes.skills.usedInProjects').replace('{count}', `${freq[skill] || 0}`)}
-                onClick={() => {
-                  /* future: filter projects by skill */
-                }}
+                onClick={() => {}}
               >
                 <span className="font-medium">{skill}</span>
                 <span className="ml-2 text-xs text-gray-200/70">{freq[skill] || 0}</span>
