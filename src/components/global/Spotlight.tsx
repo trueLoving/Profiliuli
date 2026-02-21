@@ -29,6 +29,7 @@ export interface SpotlightProps {
     showTutorial: () => void;
     closeAllWindows: () => void;
     shuffleBackground: () => void;
+    openBackgroundPicker?: () => void;
     openProjectById: (id: string) => void;
   };
 }
@@ -135,14 +136,30 @@ export default function Spotlight({ isOpen, onClose, actions }: SpotlightProps) 
         icon: <FaRegFileAlt className="text-gray-300" />,
         action: actions.closeAllWindows,
       },
-      {
-        id: 'action:shuffle-bg',
-        title: t('spotlight.actions.shuffleBackground'),
-        subtitle: t('spotlight.actions.shuffleBackgroundSubtitle'),
-        category: t('spotlight.categories.actions'),
-        icon: <FaRegFileAlt className="text-gray-300" />,
-        action: actions.shuffleBackground,
-      },
+      ...(actions.openBackgroundPicker
+        ? [
+            {
+              id: 'action:choose-bg',
+              title: t('spotlight.actions.chooseBackground'),
+              subtitle: t('spotlight.actions.chooseBackgroundSubtitle'),
+              category: t('spotlight.categories.actions'),
+              icon: <FaRegFileAlt className="text-gray-300" />,
+              action: () => {
+                onClose();
+                actions.openBackgroundPicker?.();
+              },
+            },
+          ]
+        : [
+            {
+              id: 'action:shuffle-bg',
+              title: t('spotlight.actions.shuffleBackground'),
+              subtitle: t('spotlight.actions.shuffleBackgroundSubtitle'),
+              category: t('spotlight.categories.actions'),
+              icon: <FaRegFileAlt className="text-gray-300" />,
+              action: actions.shuffleBackground,
+            },
+          ]),
       {
         id: 'action:copy-email',
         title: 'Copy email to clipboard',

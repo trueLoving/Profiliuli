@@ -1,5 +1,6 @@
 import { useEffect, useReducer, useState } from 'react';
 import ArticlesViewer from '../components/global/ArticlesViewer';
+import BackgroundPicker from '../components/global/BackgroundPicker';
 import DesktopDock from '../components/global/DesktopDock';
 import GitHubViewer from '../components/global/GitHubViewer';
 import MacTerminal from '../components/global/MacTerminal';
@@ -57,6 +58,7 @@ export default function Desktop({ initialBg, backgroundMap }: AppLayoutProps) {
   const [videoLoaded, setVideoLoaded] = useState(false);
   const [_videoError, setVideoError] = useState<string | null>(null);
   const [showToast, setShowToast] = useState<string | null>(null);
+  const [showBackgroundPicker, setShowBackgroundPicker] = useState(false);
   // 服务器端和客户端都初始化为 false，避免 hydration mismatch
   // 客户端挂载后再根据实际条件更新
   const [showShortcutHint, setShowShortcutHint] = useState(false);
@@ -201,9 +203,16 @@ export default function Desktop({ initialBg, backgroundMap }: AppLayoutProps) {
   const shuffleBackground = () => {
     const bgKeys = Object.keys(backgroundMap);
     const availableBgs = bgKeys.filter(bg => bg !== currentBg);
-    const newBg = availableBgs[Math.floor(Math.random() * availableBgs.length)];
+    const newBg = availableBgs.length > 0
+      ? availableBgs[Math.floor(Math.random() * availableBgs.length)]
+      : bgKeys[0];
     setCurrentBg(newBg);
     localStorage.setItem('lastBackground', newBg);
+  };
+
+  const selectBackground = (key: string) => {
+    setCurrentBg(key);
+    localStorage.setItem('lastBackground', key);
   };
 
   const openProjectById = (id: string) => {
@@ -282,10 +291,7 @@ export default function Desktop({ initialBg, backgroundMap }: AppLayoutProps) {
             onOpenMissionControl={() => setIsMissionControlOpen(true)}
             onToggleShortcuts={() => setShowShortcuts(s => !s)}
             onCloseAllWindows={closeAllWindows}
-            onShuffleBackground={shuffleBackground}
-            onOpenAdmin={() => {
-              window.open('/admin', '_blank');
-            }}
+            onOpenBackgroundPicker={() => setShowBackgroundPicker(true)}
             reducedMotion={reducedMotion}
             onToggleReducedMotion={() => setReducedMotion(!reducedMotion)}
             showShortcutHint={showShortcutHint}
@@ -396,6 +402,10 @@ export default function Desktop({ initialBg, backgroundMap }: AppLayoutProps) {
             showTutorial: resetTutorial,
             closeAllWindows,
             shuffleBackground,
+            openBackgroundPicker: () => {
+              setIsSpotlightOpen(false);
+              setShowBackgroundPicker(true);
+            },
             openProjectById,
           }}
         />
@@ -414,6 +424,14 @@ export default function Desktop({ initialBg, backgroundMap }: AppLayoutProps) {
           }}
         />
         <ShortcutsOverlay open={showShortcuts} onClose={() => setShowShortcuts(false)} />
+        <BackgroundPicker
+          open={showBackgroundPicker}
+          onClose={() => setShowBackgroundPicker(false)}
+          backgroundMap={backgroundMap}
+          currentKey={currentBg}
+          onSelect={selectBackground}
+          onShuffle={shuffleBackground}
+        />
         <ShortcutHint
           show={showShortcutHint}
           onToggle={show => {

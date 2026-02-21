@@ -16,6 +16,11 @@
     "copied": "copied",
     "copyFailed": "Copy failed"
   },
+  "backgroundPicker": {
+    "title": "Choose Background",
+    "current": "Current",
+    "random": "Random"
+  },
   "toolbar": {
     "file": "File",
     "view": "View",
@@ -33,6 +38,7 @@
     "contact": "Contact…",
     "closeAllWindows": "Close All Windows",
     "shuffleBackground": "Shuffle Background",
+    "chooseBackground": "Choose Background",
     "github": "GitHub",
     "linkedin": "LinkedIn",
     "medium": "Medium",
@@ -74,7 +80,9 @@
       "closeAllWindows": "Close all windows",
       "closeAllWindowsSubtitle": "Hide Notes, GitHub, Resume, Terminal",
       "shuffleBackground": "Shuffle Background",
-      "shuffleBackgroundSubtitle": "Change desktop wallpaper"
+      "shuffleBackgroundSubtitle": "Change desktop wallpaper",
+      "chooseBackground": "Choose Background",
+      "chooseBackgroundSubtitle": "Pick a wallpaper from the list"
     }
   },
   "notes": {

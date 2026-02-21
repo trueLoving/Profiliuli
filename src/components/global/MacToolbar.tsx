@@ -31,8 +31,7 @@ interface MacToolbarProps {
   onOpenMissionControl?: () => void;
   onToggleShortcuts?: () => void;
   onCloseAllWindows?: () => void;
-  onShuffleBackground?: () => void;
-  onOpenAdmin?: () => void;
+  onOpenBackgroundPicker?: () => void;
   reducedMotion?: boolean;
   onToggleReducedMotion?: () => void;
   onLanguageSwitch?: (locale: Locale) => void;
@@ -46,8 +45,7 @@ export default function MacToolbar({
   onOpenMissionControl,
   onToggleShortcuts,
   onCloseAllWindows,
-  onShuffleBackground,
-  onOpenAdmin,
+  onOpenBackgroundPicker,
   reducedMotion = false,
   onToggleReducedMotion,
   onLanguageSwitch,
@@ -148,17 +146,6 @@ export default function MacToolbar({
         icon: <IoCodeSlash size={16} />,
         action: () => window.open(userConfig.social.github, '_blank'),
       },
-      {
-        label: t('toolbar.adminDashboard'),
-        icon: <FaWindowRestore size={16} />,
-        action: () => {
-          if (onOpenAdmin) {
-            onOpenAdmin();
-          } else {
-            window.open('/admin', '_blank');
-          }
-        },
-      },
     ],
     [t('toolbar.view')]: [
       {
@@ -209,9 +196,9 @@ export default function MacToolbar({
         action: () => onCloseAllWindows?.(),
       },
       {
-        label: t('toolbar.shuffleBackground'),
+        label: t('toolbar.chooseBackground'),
         icon: <IoDocumentText size={16} />,
-        action: () => onShuffleBackground?.(),
+        action: () => onOpenBackgroundPicker?.(),
       },
     ],
     [t('toolbar.go')]: [

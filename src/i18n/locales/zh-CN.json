@@ -16,6 +16,11 @@
     "copied": "已复制",
     "copyFailed": "复制失败"
   },
+  "backgroundPicker": {
+    "title": "选择背景",
+    "current": "当前",
+    "random": "随机"
+  },
   "toolbar": {
     "file": "文件",
     "view": "视图",
@@ -33,6 +38,7 @@
     "contact": "联系…",
     "closeAllWindows": "关闭所有窗口",
     "shuffleBackground": "切换背景",
+    "chooseBackground": "选择背景",
     "github": "GitHub",
     "linkedin": "LinkedIn",
     "medium": "Medium",
@@ -74,7 +80,9 @@
       "closeAllWindows": "关闭所有窗口",
       "closeAllWindowsSubtitle": "隐藏笔记、GitHub、简历、终端",
       "shuffleBackground": "切换背景",
-      "shuffleBackgroundSubtitle": "更换桌面壁纸"
+      "shuffleBackgroundSubtitle": "更换桌面壁纸",
+      "chooseBackground": "选择背景",
+      "chooseBackgroundSubtitle": "从列表中选择壁纸"
     }
   },
   "notes": {
