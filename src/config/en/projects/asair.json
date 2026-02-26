@@ -14,6 +14,9 @@
     "Dify",
     "Chatwoot"
   ],
+  "demoVideoUrls": [
+    "/projects/asair/demo.mp4"
+  ],
   "highlights": [
     "🖥️ 三端一体：管理员前端（React + Vite）、管理后端（Flask）、AI 服务端（FastAPI）分工清晰、协同工作",
     "🤖 智能对话：集成 Dify AI，支持 Prompt 工程、知识库、自动标签与转人工规则",
