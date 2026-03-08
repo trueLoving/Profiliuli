@@ -1,4 +1,4 @@
-import { BsGithub, BsSpotify, BsLinkedin } from 'react-icons/bs';
+import { BsGithub, BsSpotify, BsLinkedin, BsGrid3X3 } from 'react-icons/bs';
 import { IoIosMail, IoIosCall } from 'react-icons/io';
 import { useUserConfig } from '../../config/hooks';
 import { BsStickyFill } from 'react-icons/bs';
@@ -10,6 +10,7 @@ interface MobileDockProps {
   onNotesClick: () => void;
   onResumeClick: () => void;
   onTerminalClick: () => void;
+  onSystemAppsClick: () => void;
 }
 
 export default function MobileDock({
@@ -17,6 +18,7 @@ export default function MobileDock({
   onNotesClick,
   onResumeClick,
   onTerminalClick,
+  onSystemAppsClick,
 }: MobileDockProps) {
   const userConfig = useUserConfig();
 
@@ -74,6 +76,15 @@ export default function MobileDock({
         >
           <div className="w-18 h-18 bg-black rounded-2xl flex items-center justify-center">
             <RiTerminalFill size={55} className="text-white" />
+          </div>
+        </button>
+        <button
+          onClick={onSystemAppsClick}
+          aria-label="Open System Apps"
+          className="flex flex-col items-center cursor-pointer"
+        >
+          <div className="w-18 h-18 bg-gradient-to-t from-slate-600 to-slate-400 rounded-2xl flex items-center justify-center">
+            <BsGrid3X3 size={55} className="text-white" />
           </div>
         </button>
       </div>

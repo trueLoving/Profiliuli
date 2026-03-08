@@ -150,7 +150,13 @@
     "resume": "简历 (PDF)",
     "articles": "文章",
     "contact": "联系",
-    "links": "链接"
+    "links": "链接",
+    "systemApps": "系统应用"
+  },
+  "systemApps": {
+    "title": "系统应用",
+    "subtitle": "内置应用，点击打开",
+    "calculator": "计算器"
   },
   "contact": {
     "title": "联系我",

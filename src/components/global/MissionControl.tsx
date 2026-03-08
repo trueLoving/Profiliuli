@@ -1,5 +1,5 @@
 import React, { useEffect } from 'react';
-import { BsGithub, BsStickyFill, BsFilePdf, BsBook } from 'react-icons/bs';
+import { BsGithub, BsStickyFill, BsFilePdf, BsBook, BsGrid3X3 } from 'react-icons/bs';
 import { RiTerminalFill } from 'react-icons/ri';
 import { BsSpotify } from 'react-icons/bs';
 
@@ -13,9 +13,10 @@ interface MissionControlProps {
     resume: boolean;
     spotify: boolean;
     articles: boolean;
+    systemApps: boolean;
   };
-  onAppClick: (app: 'terminal' | 'notes' | 'github' | 'resume' | 'spotify' | 'articles') => void;
-  onAppClose: (app: 'terminal' | 'notes' | 'github' | 'resume' | 'spotify' | 'articles') => void;
+  onAppClick: (app: 'terminal' | 'notes' | 'github' | 'resume' | 'spotify' | 'articles' | 'systemApps') => void;
+  onAppClose: (app: 'terminal' | 'notes' | 'github' | 'resume' | 'spotify' | 'articles' | 'systemApps') => void;
 }
 
 export default function MissionControl({
@@ -77,6 +78,13 @@ export default function MissionControl({
       icon: BsBook,
       color: 'from-blue-600 to-blue-400',
       active: activeApps.articles,
+    },
+    {
+      id: 'systemApps' as const,
+      name: 'System Apps',
+      icon: BsGrid3X3,
+      color: 'from-slate-600 to-slate-400',
+      active: activeApps.systemApps,
     },
     {
       id: 'spotify' as const,

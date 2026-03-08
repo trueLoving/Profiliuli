@@ -1,5 +1,5 @@
 import { useState, useEffect, useRef } from 'react';
-import { BsGithub, BsFilePdf, BsStickyFill, BsLinkedin } from 'react-icons/bs';
+import { BsGithub, BsFilePdf, BsStickyFill, BsLinkedin, BsGrid3X3 } from 'react-icons/bs';
 import { IoIosCall, IoIosMail } from 'react-icons/io';
 import { FaLink } from 'react-icons/fa';
 import ResumeViewer from './ResumeViewer';
@@ -11,20 +11,23 @@ interface DesktopDockProps {
   onTerminalClick: () => void;
   onNotesClick: () => void;
   onGitHubClick: () => void;
+  onSystemAppsClick: () => void;
   activeApps: {
     terminal: boolean;
     notes: boolean;
     github: boolean;
     resume: boolean;
     spotify: boolean;
+    systemApps: boolean;
   };
-  focusedApp?: 'terminal' | 'notes' | 'github' | 'resume' | null;
+  focusedApp?: 'terminal' | 'notes' | 'github' | 'resume' | 'systemApps' | null;
 }
 
 const DesktopDock = ({
   onTerminalClick,
   onNotesClick,
   onGitHubClick,
+  onSystemAppsClick,
   activeApps,
   focusedApp,
 }: DesktopDockProps) => {
@@ -208,6 +211,7 @@ const DesktopDock = ({
       active: activeApps.resume,
       isFocused: focusedApp === 'resume',
     },
+    // TODO: Add system apps
     {
       id: 'links',
       label: t('dock.links'),

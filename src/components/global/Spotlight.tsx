@@ -26,6 +26,7 @@ export interface SpotlightProps {
     openGitHub: () => void;
     openResume: () => void;
     openArticles?: () => void;
+    openSystemApps?: () => void;
     showTutorial: () => void;
     closeAllWindows: () => void;
     shuffleBackground: () => void;

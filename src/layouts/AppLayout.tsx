@@ -13,6 +13,7 @@ import ResumeViewer from '../components/global/ResumeViewer';
 import ShortcutHint from '../components/global/ShortcutHint';
 import ShortcutsOverlay from '../components/global/ShortcutsOverlay';
 import Spotlight from '../components/global/Spotlight';
+import SystemAppsViewer from '../components/global/SystemAppsViewer';
 import WelcomeTour from '../components/global/WelcomeTour';
 import { I18nProvider } from '../i18n/context';
 import type { Locale } from '../i18n/types';
@@ -20,7 +21,7 @@ import type { AppLayoutProps } from '../types';
 
 export default function Desktop({ initialBg, backgroundMap }: AppLayoutProps) {
   const [currentBg, setCurrentBg] = useState<string>(initialBg);
-  type App = 'terminal' | 'notes' | 'github' | 'resume' | 'spotify' | 'articles';
+  type App = 'terminal' | 'notes' | 'github' | 'resume' | 'spotify' | 'articles' | 'systemApps';
   type State = { windows: Record<App, boolean> };
   type Action = { type: 'OPEN' | 'CLOSE' | 'TOGGLE'; app: App } | { type: 'CLOSE_ALL' };
 
@@ -34,7 +35,7 @@ export default function Desktop({ initialBg, backgroundMap }: AppLayoutProps) {
         return { windows: { ...state.windows, [action.app]: !state.windows[action.app] } };
       case 'CLOSE_ALL':
         return {
-          windows: { terminal: false, notes: false, github: false, resume: false, spotify: false, articles: false },
+          windows: { terminal: false, notes: false, github: false, resume: false, spotify: false, articles: false, systemApps: false },
         };
       default:
         return state;
@@ -42,7 +43,7 @@ export default function Desktop({ initialBg, backgroundMap }: AppLayoutProps) {
   };
 
   const [state, dispatch] = useReducer(reducer, {
-    windows: { terminal: false, notes: false, github: false, resume: false, spotify: false, articles: false },
+    windows: { terminal: false, notes: false, github: false, resume: false, spotify: false, articles: false, systemApps: false },
   });
   const [showTutorial, setShowTutorial] = useState(false);
   const [isSpotlightOpen, setIsSpotlightOpen] = useState(false);
@@ -53,7 +54,7 @@ export default function Desktop({ initialBg, backgroundMap }: AppLayoutProps) {
   const [selectedArticleId, setSelectedArticleId] = useState<string | undefined>(undefined);
   const [videoRef, setVideoRef] = useState<HTMLVideoElement | null>(null);
   const [focusedApp, setFocusedApp] = useState<
-    'terminal' | 'notes' | 'github' | 'resume' | 'articles' | null
+    'terminal' | 'notes' | 'github' | 'resume' | 'articles' | 'systemApps' | null
   >(null);
   const [videoLoaded, setVideoLoaded] = useState(false);
   const [_videoError, setVideoError] = useState<string | null>(null);
@@ -328,6 +329,9 @@ export default function Desktop({ initialBg, backgroundMap }: AppLayoutProps) {
           onTerminalClick={() => {
             handleAppOpen('terminal');
           }}
+          onSystemAppsClick={() => {
+            handleAppOpen('systemApps');
+          }}
         />
         <DesktopDock
           onTerminalClick={() => {
@@ -339,12 +343,16 @@ export default function Desktop({ initialBg, backgroundMap }: AppLayoutProps) {
           onGitHubClick={() => {
             handleAppOpen('github');
           }}
+          onSystemAppsClick={() => {
+            handleAppOpen('systemApps');
+          }}
           activeApps={{
             terminal: activeApps.terminal,
             notes: activeApps.notes,
             github: activeApps.github,
             resume: activeApps.resume,
             spotify: activeApps.spotify,
+            systemApps: activeApps.systemApps,
           }}
           focusedApp={
             focusedApp === 'articles' ? null : focusedApp
@@ -389,6 +397,13 @@ export default function Desktop({ initialBg, backgroundMap }: AppLayoutProps) {
           selectedArticleId={selectedArticleId}
           onFocus={() => setFocusedApp('articles')}
         />
+        <SystemAppsViewer
+          isOpen={state.windows.systemApps}
+          onClose={() => {
+            handleAppClose('systemApps');
+          }}
+          onFocus={() => setFocusedApp('systemApps')}
+        />
         <Spotlight
           isOpen={isSpotlightOpen}
           onClose={() => setIsSpotlightOpen(false)}
@@ -399,6 +414,7 @@ export default function Desktop({ initialBg, backgroundMap }: AppLayoutProps) {
             openGitHub: () => handleAppOpen('github'),
             openResume: () => handleAppOpen('resume'),
             openArticles: () => handleAppOpen('articles'),
+            openSystemApps: () => handleAppOpen('systemApps'),
             showTutorial: resetTutorial,
             closeAllWindows,
             shuffleBackground,
@@ -445,8 +461,8 @@ export default function Desktop({ initialBg, backgroundMap }: AppLayoutProps) {
           isOpen={isMissionControlOpen}
           onClose={() => setIsMissionControlOpen(false)}
           activeApps={activeApps}
-          onAppClick={app => handleAppOpen(app)}
-          onAppClose={app => handleAppClose(app)}
+          onAppClick={app => handleAppOpen(app as App)}
+          onAppClose={app => handleAppClose(app as App)}
         />
         {/* Toast notification */}
         {showToast && (

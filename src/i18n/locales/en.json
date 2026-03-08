@@ -150,7 +150,13 @@
     "resume": "Resume (PDF)",
     "articles": "Articles",
     "contact": "Contact",
-    "links": "Links"
+    "links": "Links",
+    "systemApps": "System Apps"
+  },
+  "systemApps": {
+    "title": "System Apps",
+    "subtitle": "Built-in apps. Click to open.",
+    "calculator": "Calculator"
   },
   "contact": {
     "title": "Contact me",

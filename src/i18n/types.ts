@@ -121,6 +121,12 @@ export interface Translations {
     resume: string;
     contact: string;
     links: string;
+    systemApps: string;
+  };
+  systemApps: {
+    title: string;
+    subtitle: string;
+    calculator: string;
   };
   contact: {
     title: string;
