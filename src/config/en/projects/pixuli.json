@@ -4,7 +4,7 @@
   "description": "AI-powered cross-platform image analysis platform with automatic tagging, batch processing, and WebAssembly optimization",
   "repoUrl": "https://github.com/trueLoving/Pixuli",
   "liveUrl": "https://pixuli-web.vercel.app/",
-  "designDocUrl": "https://github.com/trueLoving/Pixuli/tree/main/.github/02-design",
+  "designDocUrl": "https://github.com/trueLoving/Pixuli/tree/main/docs",
   "techStack": ["React", "TypeScript", "Tailwind CSS", "Electron", "React Native"],
   "demoVideoUrls": [
     "/projects/pixuli/demo-web.mp4",

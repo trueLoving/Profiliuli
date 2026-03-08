@@ -5,7 +5,7 @@
   "repoUrl": "https://github.com/trueLoving/Pixuli",
   "liveUrl": "https://pixuli-web.vercel.app/",
   "techStack": ["React", "TypeScript", "Tailwind CSS", "Electron", "React Native"],
-  "designDocUrl": "https://github.com/trueLoving/Pixuli/tree/main/.github/02-design",
+  "designDocUrl": "https://github.com/trueLoving/Pixuli/tree/main/docs",
   "demoVideoUrls": [
     "/projects/pixuli/demo-web.mp4",
     "/projects/pixuli/demo-desktop.mp4",

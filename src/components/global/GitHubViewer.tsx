@@ -151,7 +151,7 @@ const GitHubViewer = ({ isOpen, onClose, selectedProjectId, onFocus }: GitHubVie
                             }
                           />
                           <button
-                            className="absolute bottom-2 right-2 text-xs bg-white/10 text-white border border-white/20 rounded px-2 py-1 hover:bg-white/20 z-10"
+                            className="absolute bottom-2 right-2 text-xs bg-black/75 text-white border border-white/30 rounded px-2 py-1 hover:bg-black/90 shadow-md z-10"
                             onClick={e => {
                               e.stopPropagation();
                               setQuickLook(project);
