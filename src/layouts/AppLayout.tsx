@@ -1,14 +1,15 @@
 import { useEffect, useReducer, useState } from 'react';
-import ArticlesViewer from '../components/global/ArticlesViewer';
+import AboutApp from '../components/global/AboutApp';
+import type { Section as AboutSection } from '../components/global/AboutApp';
 import BackgroundPicker from '../components/global/BackgroundPicker';
 import DesktopDock from '../components/global/DesktopDock';
 import GitHubViewer from '../components/global/GitHubViewer';
+import HandbookViewer from '../components/global/HandbookViewer';
 import MacTerminal from '../components/global/MacTerminal';
 import MacToolbar from '../components/global/MacToolbar';
 import MissionControl from '../components/global/MissionControl';
 import MobileDock from '../components/global/MobileDock';
-import type { Section as NotesSection } from '../components/global/NotesApp';
-import NotesApp from '../components/global/NotesApp';
+import NowViewer from '../components/global/NowViewer';
 import ResumeViewer from '../components/global/ResumeViewer';
 import ShortcutHint from '../components/global/ShortcutHint';
 import ShortcutsOverlay from '../components/global/ShortcutsOverlay';
@@ -17,13 +18,23 @@ import SystemAppsViewer from '../components/global/SystemAppsViewer';
 import WelcomeTour from '../components/global/WelcomeTour';
 import { I18nProvider } from '../i18n/context';
 import type { Locale } from '../i18n/types';
-import type { AppLayoutProps } from '../types';
+import type { AppId, AppLayoutProps } from '../types';
+
+const EMPTY_WINDOWS: Record<AppId, boolean> = {
+  terminal: false,
+  about: false,
+  github: false,
+  resume: false,
+  spotify: false,
+  handbook: false,
+  now: false,
+  systemApps: false,
+};
 
 export default function Desktop({ initialBg, backgroundMap }: AppLayoutProps) {
   const [currentBg, setCurrentBg] = useState<string>(initialBg);
-  type App = 'terminal' | 'notes' | 'github' | 'resume' | 'spotify' | 'articles' | 'systemApps';
-  type State = { windows: Record<App, boolean> };
-  type Action = { type: 'OPEN' | 'CLOSE' | 'TOGGLE'; app: App } | { type: 'CLOSE_ALL' };
+  type State = { windows: Record<AppId, boolean> };
+  type Action = { type: 'OPEN' | 'CLOSE' | 'TOGGLE'; app: AppId } | { type: 'CLOSE_ALL' };
 
   const reducer = (state: State, action: Action): State => {
     switch (action.type) {
@@ -34,28 +45,24 @@ export default function Desktop({ initialBg, backgroundMap }: AppLayoutProps) {
       case 'TOGGLE':
         return { windows: { ...state.windows, [action.app]: !state.windows[action.app] } };
       case 'CLOSE_ALL':
-        return {
-          windows: { terminal: false, notes: false, github: false, resume: false, spotify: false, articles: false, systemApps: false },
-        };
+        return { windows: { ...EMPTY_WINDOWS } };
       default:
         return state;
     }
   };
 
   const [state, dispatch] = useReducer(reducer, {
-    windows: { terminal: false, notes: false, github: false, resume: false, spotify: false, articles: false, systemApps: false },
+    windows: { ...EMPTY_WINDOWS },
   });
   const [showTutorial, setShowTutorial] = useState(false);
   const [isSpotlightOpen, setIsSpotlightOpen] = useState(false);
   const [showShortcuts, setShowShortcuts] = useState(false);
   const [isMissionControlOpen, setIsMissionControlOpen] = useState(false);
-  const [notesSection, setNotesSection] = useState<NotesSection | undefined>(undefined);
+  const [aboutSection, setAboutSection] = useState<AboutSection | undefined>(undefined);
   const [selectedProjectId, setSelectedProjectId] = useState<string | undefined>(undefined);
-  const [selectedArticleId, setSelectedArticleId] = useState<string | undefined>(undefined);
+  const [selectedHandbookId, setSelectedHandbookId] = useState<string | undefined>(undefined);
   const [videoRef, setVideoRef] = useState<HTMLVideoElement | null>(null);
-  const [focusedApp, setFocusedApp] = useState<
-    'terminal' | 'notes' | 'github' | 'resume' | 'articles' | 'systemApps' | null
-  >(null);
+  const [focusedApp, setFocusedApp] = useState<AppId | null>(null);
   const [videoLoaded, setVideoLoaded] = useState(false);
   const [_videoError, setVideoError] = useState<string | null>(null);
   const [showToast, setShowToast] = useState<string | null>(null);
@@ -196,9 +203,9 @@ export default function Desktop({ initialBg, backgroundMap }: AppLayoutProps) {
   };
 
   // Helper actions for Spotlight
-  const openNotesSection = (section: NotesSection) => {
-    setNotesSection(section);
-    handleAppOpen('notes');
+  const openAboutSection = (section: AboutSection) => {
+    setAboutSection(section);
+    handleAppOpen('about');
   };
   const closeAllWindows = () => dispatch({ type: 'CLOSE_ALL' });
   const shuffleBackground = () => {
@@ -223,16 +230,14 @@ export default function Desktop({ initialBg, backgroundMap }: AppLayoutProps) {
 
   // Replaced legacy tutorial with WelcomeTour overlay
 
-  const handleAppOpen = (app: App) => {
+  const handleAppOpen = (app: AppId) => {
     dispatch({ type: 'OPEN', app });
-    // Track focused app when opening (only for apps that can be focused)
     if (app !== 'spotify') {
       setFocusedApp(app);
     }
   };
-  const handleAppClose = (app: App) => {
+  const handleAppClose = (app: AppId) => {
     dispatch({ type: 'CLOSE', app });
-    // Clear focused app if it was the one being closed
     if (focusedApp === app) {
       setFocusedApp(null);
     }
@@ -317,91 +322,60 @@ export default function Desktop({ initialBg, backgroundMap }: AppLayoutProps) {
         <div className="relative z-0 flex items-center justify-center h-[calc(100vh-10rem)] md:h-[calc(100vh-1.5rem)] pt-6"></div>
 
         <MobileDock
-          onGitHubClick={() => {
-            handleAppOpen('github');
-          }}
-          onNotesClick={() => {
-            handleAppOpen('notes');
-          }}
-          onResumeClick={() => {
-            handleAppOpen('resume');
-          }}
-          onTerminalClick={() => {
-            handleAppOpen('terminal');
-          }}
-          onSystemAppsClick={() => {
-            handleAppOpen('systemApps');
-          }}
+          onGitHubClick={() => handleAppOpen('github')}
+          onAboutClick={() => handleAppOpen('about')}
+          onHandbookClick={() => handleAppOpen('handbook')}
+          onNowClick={() => handleAppOpen('now')}
+          onResumeClick={() => handleAppOpen('resume')}
+          onTerminalClick={() => handleAppOpen('terminal')}
+          onSystemAppsClick={() => handleAppOpen('systemApps')}
         />
         <DesktopDock
-          onTerminalClick={() => {
-            handleAppOpen('terminal');
-          }}
-          onNotesClick={() => {
-            handleAppOpen('notes');
-          }}
-          onGitHubClick={() => {
-            handleAppOpen('github');
-          }}
-          onSystemAppsClick={() => {
-            handleAppOpen('systemApps');
-          }}
-          activeApps={{
-            terminal: activeApps.terminal,
-            notes: activeApps.notes,
-            github: activeApps.github,
-            resume: activeApps.resume,
-            spotify: activeApps.spotify,
-            systemApps: activeApps.systemApps,
-          }}
-          focusedApp={
-            focusedApp === 'articles' ? null : focusedApp
-          }
+          onTerminalClick={() => handleAppOpen('terminal')}
+          onAboutClick={() => handleAppOpen('about')}
+          onGitHubClick={() => handleAppOpen('github')}
+          onHandbookClick={() => handleAppOpen('handbook')}
+          onNowClick={() => handleAppOpen('now')}
+          activeApps={activeApps}
+          focusedApp={focusedApp}
         />
 
-        <NotesApp
-          isOpen={state.windows.notes}
-          onClose={() => {
-            handleAppClose('notes');
-          }}
-          section={notesSection}
-          onFocus={() => setFocusedApp('notes')}
+        <AboutApp
+          isOpen={state.windows.about}
+          onClose={() => handleAppClose('about')}
+          section={aboutSection}
+          onFocus={() => setFocusedApp('about')}
         />
         <GitHubViewer
           isOpen={state.windows.github}
-          onClose={() => {
-            handleAppClose('github');
-          }}
+          onClose={() => handleAppClose('github')}
           selectedProjectId={selectedProjectId}
           onFocus={() => setFocusedApp('github')}
         />
         <ResumeViewer
           isOpen={state.windows.resume}
-          onClose={() => {
-            handleAppClose('resume');
-          }}
+          onClose={() => handleAppClose('resume')}
           onFocus={() => setFocusedApp('resume')}
         />
         <MacTerminal
           isOpen={state.windows.terminal}
-          onClose={() => {
-            handleAppClose('terminal');
-          }}
+          onClose={() => handleAppClose('terminal')}
           onFocus={() => setFocusedApp('terminal')}
         />
-        <ArticlesViewer
-          isOpen={state.windows.articles}
-          onClose={() => {
-            handleAppClose('articles');
-          }}
-          selectedArticleId={selectedArticleId}
-          onFocus={() => setFocusedApp('articles')}
+        <HandbookViewer
+          isOpen={state.windows.handbook}
+          onClose={() => handleAppClose('handbook')}
+          selectedEntryId={selectedHandbookId}
+          onFocus={() => setFocusedApp('handbook')}
+        />
+        <NowViewer
+          isOpen={state.windows.now}
+          onClose={() => handleAppClose('now')}
+          onFocus={() => setFocusedApp('now')}
         />
         <SystemAppsViewer
           isOpen={state.windows.systemApps}
-          onClose={() => {
-            handleAppClose('systemApps');
-          }}
+          onClose={() => handleAppClose('systemApps')}
           onFocus={() => setFocusedApp('systemApps')}
         />
         <Spotlight
@@ -409,11 +383,16 @@ export default function Desktop({ initialBg, backgroundMap }: AppLayoutProps) {
           onClose={() => setIsSpotlightOpen(false)}
           actions={{
             openTerminal: () => handleAppOpen('terminal'),
-            openNotes: () => handleAppOpen('notes'),
-            openNotesSection: s => openNotesSection(s as NotesSection),
+            openAbout: () => handleAppOpen('about'),
+            openAboutSection: s => openAboutSection(s),
             openGitHub: () => handleAppOpen('github'),
             openResume: () => handleAppOpen('resume'),
-            openArticles: () => handleAppOpen('articles'),
+            openHandbook: () => handleAppOpen('handbook'),
+            openHandbookEntry: id => {
+              setSelectedHandbookId(id);
+              handleAppOpen('handbook');
+            },
+            openNow: () => handleAppOpen('now'),
             openSystemApps: () => handleAppOpen('systemApps'),
             showTutorial: resetTutorial,
             closeAllWindows,
@@ -434,7 +413,7 @@ export default function Desktop({ initialBg, backgroundMap }: AppLayoutProps) {
           actions={{
             openSpotlight: () => setIsSpotlightOpen(true),
             openMissionControl: () => setIsMissionControlOpen(true),
-            openNotes: () => handleAppOpen('notes'),
+            openAbout: () => handleAppOpen('about'),
             openGitHub: () => handleAppOpen('github'),
             closeAll: closeAllWindows,
           }}
@@ -461,8 +440,8 @@ export default function Desktop({ initialBg, backgroundMap }: AppLayoutProps) {
           isOpen={isMissionControlOpen}
           onClose={() => setIsMissionControlOpen(false)}
           activeApps={activeApps}
-          onAppClick={app => handleAppOpen(app as App)}
-          onAppClose={app => handleAppClose(app as App)}
+          onAppClick={app => handleAppOpen(app)}
+          onAppClose={app => handleAppClose(app)}
         />
         {/* Toast notification */}
         {showToast && (

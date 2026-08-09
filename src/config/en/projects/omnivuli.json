@@ -1,0 +1,17 @@
+{
+  "id": "omnivuli",
+  "title": "Omnivuli",
+  "description": "AI Runtime and intelligent application platform — multi-tenant AI, RAG, Agent, Workflow, and shared intelligence capabilities.",
+  "repoUrl": "https://github.com/trueLoving/Omnivuli",
+  "techStack": ["TypeScript", "Python", "FastAPI", "RAG", "Agent"],
+  "highlights": [
+    "Intelligence Layer core of the Uli Ecosystem",
+    "AI Runtime, multi-tenant AI, RAG, Agent, and Workflow",
+    "Absorbs ASAIR commercial AI runtime capabilities",
+    "Shared intelligence backbone for other Uli products"
+  ],
+  "images": [],
+  "productLine": "intelligence",
+  "lifecycle": "active",
+  "currentState": "Continuous development"
+}

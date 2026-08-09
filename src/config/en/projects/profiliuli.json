@@ -1,45 +1,43 @@
 {
   "id": "profiliuli",
   "title": "Profiliuli",
-  "description": "A modern, interactive portfolio website with macOS-inspired UI, featuring terminal interface, draggable windows, and immersive user experience",
-  "repoUrl": "https://github.com/trueLoving/portfolio",
+  "description": "Identity Layer: portfolio, personal brand hub, and unified entry to the Uli Ecosystem — not a product catalog.",
+  "repoUrl": "https://github.com/trueLoving/Profiliuli",
   "liveUrl": "https://trueloving.vercel.app/",
   "techStack": ["Astro", "React", "TypeScript", "Tailwind CSS", "Vercel", "Supabase"],
   "highlights": [
-    "🎨 macOS-Inspired UI: Authentic macOS design with draggable windows, dock, and mission control",
-    "💻 Interactive Terminal: AI-powered terminal chat interface with command history",
-    "🌐 Multi-Language: Full i18n support for English and Chinese",
-    "⚡ Performance: Built with Astro for optimal loading speed and SEO",
-    "🎯 Modern Stack: React components in Astro, TypeScript for type safety",
-    "📱 Responsive: Fully responsive design for desktop and mobile"
+    "Identity product line: show who you are and what you build",
+    "About / Projects / Handbook / Now as brand modules",
+    "Unified ecosystem entry (absorbs the former website surface)",
+    "macOS-inspired interactive presentation shell"
   ],
   "challenges": [
-    "Implemented complex state management for draggable windows and app lifecycle",
-    "Built custom terminal interface with command parsing and AI integration",
-    "Created seamless i18n system with locale switching and persistence",
-    "Optimized performance with Astro's island architecture and code splitting"
+    "Clear boundaries between brand hub, product repos, and Handbook",
+    "Windowed IA for About, Projects, Handbook, and Now",
+    "Bilingual content and SEO aligned with identity positioning"
   ],
   "metrics": {
     "performance": "Lighthouse score 95+",
-    "bundleSize": "Optimized with Astro islands",
-    "seo": "Full SEO optimization with meta tags and OpenGraph"
+    "seo": "Locale-aware SEO / OG"
   },
   "images": [
     {
       "url": "/projects/profiliuli/home.webp",
       "alt": "profiliuli-home",
-      "description": "Home page with macOS-inspired interface"
+      "description": "Home with macOS-inspired interface"
     },
     {
       "url": "/projects/profiliuli/terminal.webp",
       "alt": "profiliuli-terminal",
-      "description": "Interactive terminal interface"
+      "description": "Interactive terminal"
     },
     {
       "url": "/projects/profiliuli/github-viewer.webp",
       "alt": "profiliuli-github",
-      "description": "GitHub projects viewer window"
+      "description": "Projects viewer"
     }
-  ]
+  ],
+  "productLine": "identity",
+  "lifecycle": "maintained",
+  "currentState": "Long-term maintenance"
 }
-

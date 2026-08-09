@@ -1,7 +1,7 @@
 {
   "id": "pixuli",
   "title": "Pixuli",
-  "description": "AI-powered cross-platform image analysis platform with automatic tagging, batch processing, and WebAssembly optimization",
+  "description": "Media Asset Platform for images, video, and documents — indexing, AI capabilities, and the Media Pipeline.",
   "repoUrl": "https://github.com/trueLoving/Pixuli",
   "liveUrl": "https://pixuli-web.vercel.app/",
   "designDocUrl": "https://github.com/trueLoving/Pixuli/tree/main/docs",
@@ -12,16 +12,16 @@
     "/projects/pixuli/demo-mobile.mp4"
   ],
   "highlights": [
-    "🚀 Performance: WebAssembly optimization reduced image processing time by 60%",
-    "🤖 AI Integration: Automatic tag generation using machine learning models",
-    "📱 Cross-Platform: Native apps for Web, Desktop (Electron), and Mobile (React Native)",
-    "⚡ Batch Processing: Handle 1000+ images simultaneously with progress tracking",
-    "🎨 Modern UI: Built with React, TypeScript, and Tailwind CSS"
+    "Media Asset Platform across images, video, and documents",
+    "AI tagging, indexing, and Media Pipeline foundations",
+    "Cross-platform: Web, Desktop (Electron), Mobile (React Native)",
+    "WASM-optimized processing for large media batches",
+    "Absorbs Viduli / Auduli / Doculi capabilities over time"
   ],
   "challenges": [
-    "Optimized large image processing workflows using Web Workers and WASM",
-    "Implemented efficient state management for batch operations",
-    "Achieved consistent UX across three platforms with shared codebase"
+    "Optimized large media processing with Web Workers and WASM",
+    "Unified asset model across image, video, and document pipelines",
+    "Consistent UX across three platforms with a shared codebase"
   ],
   "metrics": {
     "users": "500+",
@@ -29,17 +29,11 @@
     "performance": "60% faster than baseline"
   },
   "images": [
-    {
-      "url": "/projects/pixuli/web.webp",
-      "alt": "pixuli-web"
-    },
-    {
-      "url": "/projects/pixuli/desktop.webp",
-      "alt": "pixuli-desktop"
-    },
-    {
-      "url": "/projects/pixuli/mobile.webp",
-      "alt": "pixuli-mobile"
-    }
-  ]
+    { "url": "/projects/pixuli/web.webp", "alt": "pixuli-web" },
+    { "url": "/projects/pixuli/desktop.webp", "alt": "pixuli-desktop" },
+    { "url": "/projects/pixuli/mobile.webp", "alt": "pixuli-mobile" }
+  ],
+  "productLine": "media",
+  "lifecycle": "active",
+  "currentState": "Continuous development"
 }

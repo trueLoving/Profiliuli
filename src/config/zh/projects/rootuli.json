@@ -1,0 +1,17 @@
+{
+  "id": "rootuli",
+  "title": "Rootuli",
+  "description": "家族地点记忆、人生记录与数字遗产系统。",
+  "repoUrl": "https://github.com/trueLoving/Rootuli",
+  "techStack": ["TypeScript", "React"],
+  "highlights": [
+    "Heritage 产品线：人生记忆与数字遗产",
+    "家族地点记忆与人生记录工作流",
+    "媒体资产侧连接 Pixuli",
+    "MVP 使用中"
+  ],
+  "images": [],
+  "productLine": "heritage",
+  "lifecycle": "active",
+  "currentState": "MVP 使用中"
+}

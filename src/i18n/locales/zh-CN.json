@@ -63,6 +63,7 @@
     "noResults": "未找到结果",
     "categories": {
       "projects": "项目",
+      "handbook": "Handbook",
       "experience": "工作经历",
       "education": "教育经历",
       "skills": "技能",
@@ -71,27 +72,49 @@
     "actions": {
       "openTerminal": "打开终端",
       "openTerminalSubtitle": "提问或运行命令",
-      "openNotesExperience": "打开笔记：工作经历",
-      "openNotesExperienceSubtitle": "跳转到工作经历",
-      "openNotesEducation": "打开笔记：教育经历",
-      "openNotesEducationSubtitle": "跳转到教育经历",
-      "openNotes": "打开笔记",
-      "openNotesSubtitle": "教育、工作经历、技能",
+      "openAboutExperience": "打开 About：工作经历",
+      "openAboutExperienceSubtitle": "跳转到工作经历",
+      "openAboutEducation": "打开 About：教育经历",
+      "openAboutEducationSubtitle": "跳转到教育经历",
+      "openAbout": "打开 About",
+      "openAboutSubtitle": "身份、成长、教育、经历、技能",
+      "openHandbook": "打开 Handbook",
+      "openHandbookSubtitle": "工程思考与文章",
+      "openNow": "打开 Now",
+      "openNowSubtitle": "我当前在关注什么",
       "closeAllWindows": "关闭所有窗口",
-      "closeAllWindowsSubtitle": "隐藏笔记、GitHub、简历、终端",
+      "closeAllWindowsSubtitle": "隐藏 About、项目、Handbook、简历、终端",
       "shuffleBackground": "切换背景",
       "shuffleBackgroundSubtitle": "更换桌面壁纸",
       "chooseBackground": "选择背景",
       "chooseBackgroundSubtitle": "从列表中选择壁纸"
     }
   },
-  "notes": {
-    "title": "笔记",
+  "about": {
+    "title": "About",
+    "subtitle": "我是谁、如何成长、带来什么",
     "backToMenu": "返回菜单",
     "sections": {
+      "identity": "身份",
+      "journey": "成长轨迹",
       "education": "教育经历",
       "experience": "工作经历",
       "skills": "技能"
+    },
+    "identity": {
+      "title": "身份",
+      "values": "价值观",
+      "focus": "当前方向"
+    },
+    "journey": {
+      "title": "成长轨迹",
+      "subtitle": "职业成长与产品演进",
+      "categories": {
+        "career": "职业",
+        "product": "产品",
+        "learning": "学习",
+        "milestone": "里程碑"
+      }
     },
     "education": {
       "title": "教育经历",
@@ -100,7 +123,8 @@
       "year": "年份",
       "location": "地点",
       "major": "专业",
-      "description": "描述"
+      "description": "描述",
+      "relevantCourses": "相关课程"
     },
     "experience": {
       "title": "工作经历",
@@ -109,7 +133,8 @@
       "period": "时间",
       "location": "地点",
       "description": "描述",
-      "technologies": "技术栈"
+      "technologies": "技术栈",
+      "achievements": "关键成就"
     },
     "skills": {
       "title": "技能",
@@ -133,6 +158,8 @@
       }
     },
     "menu": {
+      "identityDescription": "背景、价值观与当前方向",
+      "journeyDescription": "职业成长与产品演进时间线",
       "educationDescription": "查看我的教育背景和学历",
       "experienceDescription": "探索我的专业工作经历",
       "skillsDescription": "查看我的技术技能和专业知识"
@@ -143,12 +170,40 @@
       "next": "下一张"
     }
   },
+  "handbook": {
+    "title": "Handbook",
+    "myHandbook": "Handbook",
+    "subtitle": "工程思考、产品决策与文章",
+    "noEntries": "暂无 Handbook 内容。",
+    "minRead": "分钟阅读",
+    "categories": {
+      "all": "全部",
+      "engineering": "工程实践",
+      "architecture": "架构",
+      "product-thinking": "产品思考",
+      "decision-records": "决策记录",
+      "lessons-learned": "复盘",
+      "philosophy": "理念",
+      "articles": "文章"
+    }
+  },
+  "now": {
+    "title": "Now",
+    "updatedAt": "更新于",
+    "kinds": {
+      "building": "在建",
+      "learning": "学习",
+      "reading": "阅读",
+      "focus": "专注"
+    }
+  },
   "dock": {
     "terminal": "终端",
-    "notes": "笔记",
-    "github": "GitHub",
+    "about": "About",
+    "github": "项目",
     "resume": "简历 (PDF)",
-    "articles": "文章",
+    "handbook": "Handbook",
+    "now": "Now",
     "contact": "联系",
     "links": "链接",
     "systemApps": "系统应用"
@@ -181,12 +236,6 @@
     "thinking": "思考中...",
     "error": "发送消息失败。请重试。"
   },
-  "articles": {
-    "title": "文章",
-    "myArticles": "我的文章",
-    "noArticles": "暂无文章。",
-    "minRead": "分钟阅读"
-  },
   "language": {
     "switch": "切换语言",
     "english": "English",
@@ -199,8 +248,9 @@
     "missionControl": "调度中心"
   },
   "projects": {
-    "title": "GitHub 项目",
-    "myProjects": "我的项目",
+    "title": "项目",
+    "myProjects": "Uli Ecosystem",
+    "subtitle": "长期个人数字生态：Media、Intelligence、Communication、Home、Heritage、Vitality、Identity",
     "backToProjects": "返回项目列表",
     "highlights": "✨ 亮点",
     "technicalChallenges": "🎯 技术挑战",
@@ -215,6 +265,31 @@
     "openRepo": "打开代码库",
     "openLive": "打开在线网站",
     "designDoc": "设计文档",
-    "demoVideo": "演示视频"
+    "demoVideo": "演示视频",
+    "mergedInto": "合并至",
+    "productLine": {
+      "media": "Media",
+      "intelligence": "Intelligence",
+      "communication": "Communication",
+      "home": "Home",
+      "heritage": "Heritage",
+      "vitality": "Vitality",
+      "identity": "Identity",
+      "connect": "Connect",
+      "dev": "Dev",
+      "lab": "Lab"
+    },
+    "lifecycle": {
+      "active": "Active",
+      "activeDescription": "长期主线，持续投入与演进",
+      "mvp": "MVP",
+      "mvpDescription": "以核心能力验证为第一目标，达标后进入长期演进",
+      "maintained": "Maintained",
+      "maintainedDescription": "保持可用与同步，不主动扩展大型功能",
+      "merged": "Merged",
+      "mergedDescription": "仓库保留，核心能力已迁移至其它产品",
+      "archived": "Archived",
+      "archivedDescription": "停止演进，仅保留历史与代码参考"
+    }
   }
 }

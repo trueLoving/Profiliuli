@@ -1,0 +1,17 @@
+{
+  "id": "rootuli",
+  "title": "Rootuli",
+  "description": "Heritage system for family place memory, life records, and digital legacy.",
+  "repoUrl": "https://github.com/trueLoving/Rootuli",
+  "techStack": ["TypeScript", "React"],
+  "highlights": [
+    "Heritage product line for life memory and digital legacy",
+    "Family place memory and life-record workflows",
+    "Connects to Pixuli for media asset storage",
+    "MVP in active use"
+  ],
+  "images": [],
+  "productLine": "heritage",
+  "lifecycle": "active",
+  "currentState": "MVP in use"
+}

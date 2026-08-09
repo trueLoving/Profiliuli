@@ -1,22 +1,16 @@
 import React, { useEffect } from 'react';
-import { BsGithub, BsStickyFill, BsFilePdf, BsBook, BsGrid3X3 } from 'react-icons/bs';
+import { BsGithub, BsStickyFill, BsFilePdf, BsBook, BsGrid3X3, BsClock } from 'react-icons/bs';
 import { RiTerminalFill } from 'react-icons/ri';
 import { BsSpotify } from 'react-icons/bs';
+import type { AppId } from '../../types';
+import { useI18n } from '../../i18n/context';
 
 interface MissionControlProps {
   isOpen: boolean;
   onClose: () => void;
-  activeApps: {
-    terminal: boolean;
-    notes: boolean;
-    github: boolean;
-    resume: boolean;
-    spotify: boolean;
-    articles: boolean;
-    systemApps: boolean;
-  };
-  onAppClick: (app: 'terminal' | 'notes' | 'github' | 'resume' | 'spotify' | 'articles' | 'systemApps') => void;
-  onAppClose: (app: 'terminal' | 'notes' | 'github' | 'resume' | 'spotify' | 'articles' | 'systemApps') => void;
+  activeApps: Record<AppId, boolean>;
+  onAppClick: (app: AppId) => void;
+  onAppClose: (app: AppId) => void;
 }
 
 export default function MissionControl({
@@ -26,6 +20,8 @@ export default function MissionControl({
   onAppClick,
   onAppClose,
 }: MissionControlProps) {
+  const { t } = useI18n();
+
   useEffect(() => {
     if (!isOpen) return;
 
@@ -43,51 +39,64 @@ export default function MissionControl({
 
   if (!isOpen) return null;
 
-  const apps = [
+  const apps: Array<{
+    id: AppId;
+    name: string;
+    icon: React.ComponentType<{ size?: number; className?: string }>;
+    color: string;
+    active: boolean;
+  }> = [
     {
-      id: 'github' as const,
-      name: 'GitHub Projects',
+      id: 'github',
+      name: t('dock.github'),
       icon: BsGithub,
       color: 'from-black to-black/60',
       active: activeApps.github,
     },
     {
-      id: 'notes' as const,
-      name: 'Notes',
+      id: 'about',
+      name: t('dock.about'),
       icon: BsStickyFill,
       color: 'from-yellow-600 to-yellow-400',
-      active: activeApps.notes,
+      active: activeApps.about,
     },
     {
-      id: 'terminal' as const,
-      name: 'Terminal',
+      id: 'handbook',
+      name: t('dock.handbook'),
+      icon: BsBook,
+      color: 'from-blue-600 to-blue-400',
+      active: activeApps.handbook,
+    },
+    {
+      id: 'now',
+      name: t('dock.now'),
+      icon: BsClock,
+      color: 'from-emerald-600 to-emerald-400',
+      active: activeApps.now,
+    },
+    {
+      id: 'terminal',
+      name: t('dock.terminal'),
       icon: RiTerminalFill,
       color: 'from-black to-black/60',
       active: activeApps.terminal,
     },
     {
-      id: 'resume' as const,
-      name: 'Resume',
+      id: 'resume',
+      name: t('dock.resume'),
       icon: BsFilePdf,
       color: 'from-red-600 to-red-400',
       active: activeApps.resume,
     },
     {
-      id: 'articles' as const,
-      name: 'Articles',
-      icon: BsBook,
-      color: 'from-blue-600 to-blue-400',
-      active: activeApps.articles,
-    },
-    {
-      id: 'systemApps' as const,
-      name: 'System Apps',
+      id: 'systemApps',
+      name: t('dock.systemApps'),
       icon: BsGrid3X3,
       color: 'from-slate-600 to-slate-400',
       active: activeApps.systemApps,
     },
     {
-      id: 'spotify' as const,
+      id: 'spotify',
       name: 'Spotify',
       icon: BsSpotify,
       color: 'from-green-600 to-green-400',
@@ -103,54 +112,53 @@ export default function MissionControl({
   };
 
   return (
-    <div
-      className="fixed inset-0 z-[90]"
-      role="dialog"
-      aria-modal="true"
-      aria-label="Mission Control"
-    >
+    <div className="fixed inset-0 z-[96]">
       <div className="absolute inset-0 bg-black/70 backdrop-blur-md" onClick={onClose} />
-      <div className="relative h-full flex flex-col items-center justify-center p-8">
-        <h2 className="text-white text-2xl font-semibold mb-8">Mission Control</h2>
-        {activeWindows.length === 0 ? (
-          <p className="text-gray-400 text-lg">No open windows</p>
-        ) : (
-          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6 max-w-6xl">
-            {activeWindows.map(app => {
-              const Icon = app.icon;
-              return (
-                <button
-                  key={app.id}
-                  onClick={() => handleAppClick(app)}
-                  className="group relative bg-gray-800/50 rounded-xl p-6 border border-white/10 hover:border-white/30 transition-all hover:scale-105 focus:outline-none focus:ring-2 focus:ring-white/50"
-                  aria-label={`Switch to ${app.name}`}
-                >
-                  <div className="flex flex-col items-center gap-4">
-                    <div
-                      className={`w-24 h-24 bg-gradient-to-t ${app.color} rounded-xl flex items-center justify-center shadow-lg`}
-                    >
-                      <Icon size={50} className="text-white" />
-                    </div>
-                    <span className="text-white text-lg font-medium">{app.name}</span>
-                  </div>
-                  <div className="absolute top-3 right-3">
+      <div className="relative h-full flex items-center justify-center p-6">
+        <div className="w-full max-w-5xl">
+          <h2 className="text-white text-2xl font-semibold mb-6 text-center">
+            {t('toolbar.missionControl')}
+          </h2>
+          {activeWindows.length === 0 ? (
+            <p className="text-center text-gray-400">No open windows</p>
+          ) : (
+            <div className="grid grid-cols-2 md:grid-cols-3 gap-4">
+              {activeWindows.map(app => {
+                const Icon = app.icon;
+                return (
+                  <div
+                    key={app.id}
+                    className="relative group bg-gray-800/80 border border-white/10 rounded-2xl p-4 hover:border-white/30 transition-colors"
+                  >
                     <button
+                      type="button"
+                      className="absolute top-2 right-2 w-6 h-6 rounded-full bg-red-500/80 text-white text-xs opacity-0 group-hover:opacity-100"
                       onClick={e => {
                         e.stopPropagation();
                         onAppClose(app.id);
                       }}
-                      className="text-gray-400 hover:text-white text-xs bg-white/10 px-2 py-1 rounded"
                       aria-label={`Close ${app.name}`}
                     >
-                      ✕
+                      ×
+                    </button>
+                    <button
+                      type="button"
+                      className="w-full text-left"
+                      onClick={() => handleAppClick(app)}
+                    >
+                      <div
+                        className={`w-14 h-14 mb-3 bg-gradient-to-t ${app.color} rounded-xl flex items-center justify-center`}
+                      >
+                        <Icon size={28} className="text-white" />
+                      </div>
+                      <div className="text-white font-medium">{app.name}</div>
                     </button>
                   </div>
-                </button>
-              );
-            })}
-          </div>
-        )}
-        <p className="text-gray-400 text-sm mt-8">Press Esc or click outside to close</p>
+                );
+              })}
+            </div>
+          )}
+        </div>
       </div>
     </div>
   );

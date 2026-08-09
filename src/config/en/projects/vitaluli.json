@@ -1,0 +1,17 @@
+{
+  "id": "vitaluli",
+  "title": "Vitaluli",
+  "description": "Personal Vitality Operating System for body, mind, and personal-state management — Physuli (physical) and Animuli (mental) under one OS.",
+  "repoUrl": "https://github.com/trueLoving/Vitaluli",
+  "techStack": ["TypeScript", "React"],
+  "highlights": [
+    "Vitality product line: personal vitality OS",
+    "Physuli: body metrics, training, recovery, nutrition",
+    "Animuli: emotion, reflection, mind practice",
+    "Milestone-first MVP before long-term evolution"
+  ],
+  "images": [],
+  "productLine": "vitality",
+  "lifecycle": "mvp",
+  "currentState": "Project kickoff"
+}

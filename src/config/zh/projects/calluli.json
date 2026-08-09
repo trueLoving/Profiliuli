@@ -1,0 +1,17 @@
+{
+  "id": "calluli",
+  "title": "Calluli",
+  "description": "通信平台：从模拟电话开始，逐步扩展至语音、消息与通信能力。",
+  "repoUrl": "https://github.com/trueLoving/Calluli",
+  "techStack": ["TypeScript", "React"],
+  "highlights": [
+    "Communication 产品线，连接人与人",
+    "从模拟电话 / 通话工作流切入",
+    "路线图扩展至语音、消息与通信原语",
+    "长期 Active 主线"
+  ],
+  "images": [],
+  "productLine": "communication",
+  "lifecycle": "active",
+  "currentState": "MVP 开发"
+}

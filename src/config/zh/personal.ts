@@ -1,17 +1,16 @@
 /**
- * Personal information configuration (Chinese)
- * Update this file with your personal details
+ * 个人信息配置（中文）
  */
 
 import type { PersonalInfo } from '../../types';
 
 export const personal: PersonalInfo = {
   name: 'trueLoving',
-  role: '前端 & 全栈开发工程师 | Rust • Web3 • AI 爱好者',
+  role: '个人品牌中心 · Uli Ecosystem 构建者',
   location: '中国，杭州',
   email: 'starsky.zhanglinjie@gmail.com',
-  website: '专业作品集',
+  website: 'Profiliuli',
   roleFocus:
-    '充满热情的开发工程师，拥有 3+ 年构建可扩展 Web 应用和跨平台解决方案的经验。专注于现代前端框架（React、Vue.js）、全栈开发（NestJS）和新兴技术（Rust、Web3、AI）。在桌面（Electron、Tauri）、移动（React Native）和 Web 平台交付高性能应用方面有良好记录。',
+    '我构建长期产品体系，并公开自己的思考方式。Profiliuli 是我的个人品牌中心：About 讲述身份与成长，Projects 展示 Uli Ecosystem，Handbook 沉淀工程与产品思考。当前关注 AI 辅助构建、跨平台架构，以及可复利的产品线。',
   yearOfBirth: 1999,
 };

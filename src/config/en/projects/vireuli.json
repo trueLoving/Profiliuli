@@ -1,0 +1,17 @@
+{
+  "id": "vireuli",
+  "title": "Vireuli",
+  "description": "Home media OS for multi-device connectivity and the family digital space — absorbs Stationuli device-link and P2P capabilities.",
+  "repoUrl": "https://github.com/trueLoving/Vireuli",
+  "techStack": ["TypeScript", "Rust", "Tauri"],
+  "highlights": [
+    "Home product line: family digital space and device interconnection",
+    "Home media OS with multi-device connectivity",
+    "Absorbs Stationuli Device Link / P2P capabilities",
+    "MVP completed and in daily use"
+  ],
+  "images": [],
+  "productLine": "home",
+  "lifecycle": "active",
+  "currentState": "MVP completed / in use"
+}

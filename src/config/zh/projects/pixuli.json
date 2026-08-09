@@ -1,27 +1,27 @@
 {
   "id": "pixuli",
   "title": "Pixuli",
-  "description": "基于 AI 的跨平台图像分析平台，支持自动标签生成、批量处理和 WebAssembly 优化",
+  "description": "图片与媒体资产管理平台（Media Asset Platform），负责图片、视频、文档等媒体资源的管理、索引、AI 能力与 Media Pipeline。",
   "repoUrl": "https://github.com/trueLoving/Pixuli",
   "liveUrl": "https://pixuli-web.vercel.app/",
-  "techStack": ["React", "TypeScript", "Tailwind CSS", "Electron", "React Native"],
   "designDocUrl": "https://github.com/trueLoving/Pixuli/tree/main/docs",
+  "techStack": ["React", "TypeScript", "Tailwind CSS", "Electron", "React Native"],
   "demoVideoUrls": [
     "/projects/pixuli/demo-web.mp4",
     "/projects/pixuli/demo-desktop.mp4",
     "/projects/pixuli/demo-mobile.mp4"
   ],
   "highlights": [
-    "🚀 性能优化：WebAssembly 优化使图像处理时间减少 60%",
-    "🤖 AI 集成：使用机器学习模型自动生成标签",
-    "📱 跨平台：支持 Web、桌面（Electron）和移动端（React Native）原生应用",
-    "⚡ 批量处理：可同时处理 1000+ 张图片，支持进度跟踪",
-    "🎨 现代 UI：使用 React、TypeScript 和 Tailwind CSS 构建"
+    "覆盖图片、视频、文档的媒体资产管理平台",
+    "AI 标签、索引与 Media Pipeline 基础能力",
+    "跨端：Web / Desktop（Electron）/ Mobile（React Native）",
+    "WASM 优化的大批量媒体处理",
+    "逐步吸收 Viduli / Auduli / Doculi 能力"
   ],
   "challenges": [
-    "使用 Web Workers 和 WASM 优化大型图像处理工作流",
-    "实现高效的批量操作状态管理",
-    "通过共享代码库实现三个平台的一致用户体验"
+    "用 Web Workers 与 WASM 优化大体量媒体处理",
+    "统一图片、视频、文档流水线的资产模型",
+    "三端共享代码库下保持一致体验"
   ],
   "metrics": {
     "users": "500+",
@@ -29,17 +29,11 @@
     "performance": "比基准快 60%"
   },
   "images": [
-    {
-      "url": "/projects/pixuli/web.webp",
-      "alt": "pixuli-web"
-    },
-    {
-      "url": "/projects/pixuli/desktop.webp",
-      "alt": "pixuli-desktop"
-    },
-    {
-      "url": "/projects/pixuli/mobile.webp",
-      "alt": "pixuli-mobile"
-    }
-  ]
+    { "url": "/projects/pixuli/web.webp", "alt": "pixuli-web" },
+    { "url": "/projects/pixuli/desktop.webp", "alt": "pixuli-desktop" },
+    { "url": "/projects/pixuli/mobile.webp", "alt": "pixuli-mobile" }
+  ],
+  "productLine": "media",
+  "lifecycle": "active",
+  "currentState": "持续开发"
 }

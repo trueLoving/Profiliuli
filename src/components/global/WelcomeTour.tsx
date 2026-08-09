@@ -1,12 +1,12 @@
 import React, { useEffect, useMemo, useState } from 'react';
-import { IoSearch, IoBookmarksOutline, IoDocumentTextOutline } from 'react-icons/io5';
+import { IoSearch, IoBookmarksOutline } from 'react-icons/io5';
 import { FaWindowRestore, FaMousePointer } from 'react-icons/fa';
 import { BsGithub } from 'react-icons/bs';
 
 type Actions = {
   openSpotlight: () => void;
   openMissionControl: () => void;
-  openNotes: () => void;
+  openAbout: () => void;
   openGitHub: () => void;
   closeAll?: () => void;
 };
@@ -22,8 +22,8 @@ export default function WelcomeTour({ open, onClose, actions }: WelcomeTourProps
     () => [
       {
         id: 'welcome',
-        title: 'Welcome to my macOS-style portfolio',
-        desc: 'Explore projects, experience, and more through a familiar desktop interface.',
+        title: 'Welcome to Profiliuli',
+        desc: 'A personal brand hub: About for identity, Projects for the Uli Ecosystem, Handbook for thinking.',
         icon: <FaWindowRestore className="text-white/90" size={28} />,
         cta: { label: 'Start tour', onClick: undefined as undefined | (() => void) },
       },
@@ -46,18 +46,18 @@ export default function WelcomeTour({ open, onClose, actions }: WelcomeTourProps
       {
         id: 'dock',
         title: 'Dock with magnification',
-        desc: 'Hover the dock to smoothly magnify icons. Click to open Notes, Projects, Terminal, and more.',
+        desc: 'Hover the dock to magnify icons. Open About, Projects, Handbook, Now, Resume, and Terminal.',
         icon: <FaMousePointer className="text-white/90" size={28} />,
         cta: undefined,
         tip: 'Active apps show a white indicator dot.',
       },
       {
-        id: 'projects-notes',
-        title: 'Projects & Notes',
-        desc: 'Deep-link into Projects and Notes sections directly from Spotlight or the dock.',
+        id: 'projects-about',
+        title: 'Projects & About',
+        desc: 'Explore the Uli Ecosystem and your identity story from Spotlight or the dock.',
         icon: <BsGithub className="text-white/90" size={28} />,
         cta: { label: 'Open Projects', onClick: actions.openGitHub },
-        altCta: { label: 'Open Notes', onClick: actions.openNotes },
+        altCta: { label: 'Open About', onClick: actions.openAbout },
         tip: 'Use Space on a project to Quick Look; Enter to open.',
       },
       {

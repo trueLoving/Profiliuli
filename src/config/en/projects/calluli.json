@@ -1,0 +1,17 @@
+{
+  "id": "calluli",
+  "title": "Calluli",
+  "description": "Communication platform starting from simulated telephony, expanding toward voice, messaging, and broader communication capabilities.",
+  "repoUrl": "https://github.com/trueLoving/Calluli",
+  "techStack": ["TypeScript", "React"],
+  "highlights": [
+    "Communication product line for people-to-people connection",
+    "Starts from simulated phone / call workflows",
+    "Roadmap expands to voice, messaging, and communication primitives",
+    "Long-term Active mainline"
+  ],
+  "images": [],
+  "productLine": "communication",
+  "lifecycle": "active",
+  "currentState": "MVP in development"
+}

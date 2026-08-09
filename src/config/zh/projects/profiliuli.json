@@ -1,48 +1,43 @@
 {
   "id": "profiliuli",
   "title": "Profiliuli",
-  "description": "一个现代化的交互式作品集网站，采用 macOS 风格 UI，包含终端界面、可拖拽窗口和沉浸式用户体验",
-  "repoUrl": "https://github.com/trueLoving/portfolio",
+  "description": "Identity 层：作品集、个人品牌中心与 Uli Ecosystem 统一入口——不是产品目录站。",
+  "repoUrl": "https://github.com/trueLoving/Profiliuli",
   "liveUrl": "https://trueloving.vercel.app/",
   "techStack": ["Astro", "React", "TypeScript", "Tailwind CSS", "Vercel", "Supabase"],
   "highlights": [
-    "🎨 macOS 风格 UI：真实的 macOS 设计，包含可拖拽窗口、Dock 和 Mission Control",
-    "💻 交互式终端：AI 驱动的终端聊天界面，支持命令历史",
-    "🌐 多语言支持：完整的中英文国际化支持",
-    "⚡ 性能优化：使用 Astro 构建，实现最佳加载速度和 SEO",
-    "🎯 现代技术栈：Astro 中的 React 组件，TypeScript 类型安全",
-    "📱 响应式设计：完全响应式设计，支持桌面和移动端"
+    "Identity 产品线：展示你是谁、构建了什么",
+    "About / Projects / Handbook / Now 品牌模块",
+    "统一生态入口（吸收原 website 官网表面）",
+    "macOS 风格交互展示壳"
   ],
   "challenges": [
-    "实现了可拖拽窗口和应用生命周期的复杂状态管理",
-    "构建了自定义终端界面，包含命令解析和 AI 集成",
-    "创建了无缝的 i18n 系统，支持语言切换和持久化",
-    "使用 Astro 的岛屿架构和代码分割优化性能"
+    "厘清品牌中心、产品仓库与 Handbook 的边界",
+    "About / Projects / Handbook / Now 的窗口化信息架构",
+    "双语内容与 SEO 对齐身份定位"
   ],
   "metrics": {
-    "performance": "Lighthouse 评分 95+",
-    "bundleSize": "使用 Astro islands 优化",
-    "seo": "完整的 SEO 优化，包含 meta 标签和 OpenGraph"
+    "performance": "Lighthouse 95+",
+    "seo": "随语言的 SEO / OG"
   },
-  "demoVideoUrls": [
-    "/projects/profiliuli/demo.mp4"
-  ],
   "images": [
     {
       "url": "/projects/profiliuli/home.webp",
       "alt": "profiliuli-home",
-      "description": "采用 macOS 风格的主页界面"
+      "description": "macOS 风格首页"
     },
     {
       "url": "/projects/profiliuli/terminal.webp",
       "alt": "profiliuli-terminal",
-      "description": "交互式终端界面"
+      "description": "交互终端"
     },
     {
       "url": "/projects/profiliuli/github-viewer.webp",
       "alt": "profiliuli-github",
-      "description": "GitHub 项目查看器窗口"
+      "description": "项目查看器"
     }
-  ]
+  ],
+  "productLine": "identity",
+  "lifecycle": "maintained",
+  "currentState": "长期维护"
 }
-

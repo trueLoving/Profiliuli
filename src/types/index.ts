@@ -31,6 +31,27 @@ export interface ProjectStructure {
   children: readonly FileNode[];
 }
 
+/** Uli Ecosystem product lines */
+export type ProductLine =
+  | 'media'
+  | 'intelligence'
+  | 'communication'
+  | 'home'
+  | 'heritage'
+  | 'vitality'
+  | 'identity'
+  | 'connect'
+  | 'dev'
+  | 'lab';
+
+/** Product lifecycle in the Uli Ecosystem */
+export type ProjectLifecycle = 'active' | 'mvp' | 'maintained' | 'merged' | 'archived';
+
+/** @deprecated Prefer productLine */
+export type ProjectEcosystem = 'uli' | 'brand' | 'other';
+/** @deprecated Prefer lifecycle */
+export type ProjectStatus = 'active' | 'planned' | 'archived' | ProjectLifecycle;
+
 export interface Project {
   id: string;
   title: string;
@@ -48,6 +69,18 @@ export interface Project {
   images: readonly Image[];
   highlights?: readonly string[];
   challenges?: readonly string[];
+  /** Uli Ecosystem product line */
+  productLine: ProductLine;
+  /** Lifecycle: Active / MVP / Maintained / Merged / Archived */
+  lifecycle: ProjectLifecycle;
+  /** Short operational state, e.g. continuous development / in use */
+  currentState?: string;
+  /** When lifecycle is merged, target product id */
+  mergedInto?: string;
+  /** @deprecated Prefer productLine */
+  ecosystem?: ProjectEcosystem;
+  /** @deprecated Prefer lifecycle */
+  status?: ProjectStatus;
   metrics?: {
     users?: string;
     imagesProcessed?: string;
@@ -98,6 +131,80 @@ export interface Experience {
   achievements?: readonly string[];
   technologies?: readonly string[];
   images?: readonly Image[];
+}
+
+// ============================================
+// About Types
+// ============================================
+
+export interface AboutIdentity {
+  headline: string;
+  summary: string;
+  values: readonly string[];
+  focus: readonly string[];
+}
+
+export interface JourneyItem {
+  id: string;
+  date: string;
+  title: string;
+  description: string;
+  category?: 'career' | 'product' | 'learning' | 'milestone';
+}
+
+export interface AboutConfig {
+  identity: AboutIdentity;
+  journey: readonly JourneyItem[];
+}
+
+// ============================================
+// Handbook Types
+// ============================================
+
+export type HandbookCategory =
+  | 'engineering'
+  | 'architecture'
+  | 'product-thinking'
+  | 'decision-records'
+  | 'lessons-learned'
+  | 'philosophy'
+  | 'articles';
+
+export interface HandbookEntry {
+  id: string;
+  title: string;
+  description: string;
+  content: string;
+  publishDate: string;
+  tags: readonly string[];
+  category: HandbookCategory;
+  platforms?: {
+    juejin?: { url: string; views?: number; likes?: number };
+    medium?: { url: string; views?: number; claps?: number };
+    wechat?: { url: string; views?: number; likes?: number };
+  };
+  readTime?: number;
+  coverImage?: string;
+}
+
+/** @deprecated Use HandbookEntry — kept for gradual migration */
+export type Article = HandbookEntry;
+
+// ============================================
+// Now Types
+// ============================================
+
+export interface NowItem {
+  id: string;
+  title: string;
+  description: string;
+  kind: 'building' | 'learning' | 'reading' | 'focus';
+}
+
+export interface NowConfig {
+  updatedAt: string;
+  headline: string;
+  items: readonly NowItem[];
 }
 
 // ============================================
@@ -187,14 +294,18 @@ export interface UserConfig {
   theme: ThemeConfig;
 
   // Content
+  about: AboutConfig;
   education: readonly Education[];
   courses: readonly Course[];
   skills: readonly string[];
-  /** When set, NotesApp shows skills grouped by category (e.g. frontend, backend) */
+  /** When set, About shows skills grouped by category */
   skillsByCategory?: SkillsByCategory;
   experience: readonly Experience[];
   projects: readonly Project[];
-  articles?: readonly Article[];
+  handbook: readonly HandbookEntry[];
+  /** @deprecated Prefer handbook */
+  articles?: readonly HandbookEntry[];
+  now: NowConfig;
 }
 
 /** Single skill with optional level/years (for categorized display) */
@@ -260,33 +371,25 @@ export interface ChatHistory {
 // App State Types
 // ============================================
 
-export type AppId = 'terminal' | 'notes' | 'github' | 'resume' | 'spotify' | 'articles';
+export type AppId =
+  | 'terminal'
+  | 'about'
+  | 'github'
+  | 'resume'
+  | 'spotify'
+  | 'handbook'
+  | 'now'
+  | 'systemApps';
 
 export interface ActiveApps {
   terminal: boolean;
-  notes: boolean;
+  about: boolean;
   github: boolean;
   resume: boolean;
   spotify: boolean;
-  articles: boolean;
+  handbook: boolean;
+  now: boolean;
+  systemApps: boolean;
 }
 
-// ============================================
-// Article Types
-// ============================================
-
-export interface Article {
-  id: string;
-  title: string;
-  description: string;
-  content: string; // Markdown content
-  publishDate: string;
-  tags: readonly string[];
-  platforms?: {
-    juejin?: { url: string; views?: number; likes?: number };
-    medium?: { url: string; views?: number; claps?: number };
-    wechat?: { url: string; views?: number; likes?: number };
-  };
-  readTime?: number; // Reading time in minutes
-  coverImage?: string;
-}
+export type AboutSection = 'menu' | 'identity' | 'education' | 'experience' | 'skills' | 'journey';

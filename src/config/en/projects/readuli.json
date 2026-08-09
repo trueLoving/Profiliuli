@@ -1,0 +1,17 @@
+{
+  "id": "readuli",
+  "title": "Readuli",
+  "description": "Reading Experience Platform for PDF/EPUB reading, annotation, knowledge intake, and digital reading workflows.",
+  "repoUrl": "https://github.com/trueLoving/Readuli",
+  "techStack": ["TypeScript", "React"],
+  "highlights": [
+    "Reading Experience Platform in the Media product line",
+    "PDF / EPUB reading and annotation as core loops",
+    "Knowledge input layer between Pixuli assets and Omnivuli intelligence",
+    "Long-term mainline for digital reading"
+  ],
+  "images": [],
+  "productLine": "media",
+  "lifecycle": "active",
+  "currentState": "MVP in development"
+}
