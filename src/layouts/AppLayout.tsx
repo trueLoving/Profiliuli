@@ -135,38 +135,65 @@ export default function Desktop({ initialBg, backgroundMap }: AppLayoutProps) {
     return () => mediaQuery.removeEventListener('change', handleChange);
   }, []);
 
-  // Ensure video plays when mounted or background changes
+  // Ensure video plays and becomes visible when mounted or background changes.
+  // Avoid blindly resetting videoLoaded — onLoadedData can fire before this effect,
+  // which previously left the video stuck at opacity-0 until a manual background switch.
   useEffect(() => {
-    if (videoRef && currentBackground?.type === 'video') {
+    if (!videoRef || currentBackground?.type !== 'video') return;
+
+    setVideoError(null);
+
+    const markLoaded = () => {
+      setVideoLoaded(true);
+    };
+
+    if (videoRef.readyState >= HTMLMediaElement.HAVE_CURRENT_DATA) {
+      markLoaded();
+    } else {
       setVideoLoaded(false);
-      setVideoError(null);
-      videoRef.play().catch(error => {
-        console.warn('Video autoplay failed:', error);
-      });
     }
+
+    videoRef.addEventListener('loadeddata', markLoaded);
+    videoRef.addEventListener('canplay', markLoaded);
+    videoRef.play().catch(error => {
+      console.warn('Video autoplay failed:', error);
+      // Still reveal the frame if metadata/data is already available
+      if (videoRef.readyState >= HTMLMediaElement.HAVE_CURRENT_DATA) {
+        markLoaded();
+      }
+    });
+
+    return () => {
+      videoRef.removeEventListener('loadeddata', markLoaded);
+      videoRef.removeEventListener('canplay', markLoaded);
+    };
   }, [videoRef, currentBg, currentBackground]);
 
-  // 只在客户端执行，避免服务器端和客户端使用不同的随机值
+  // Client-only init: avoid repeating the same background as last visit, show tutorial once.
+  // Must run on mount only — depending on currentBg caused repeated swaps and blank video.
   useEffect(() => {
     if (typeof window === 'undefined') return;
 
     const lastBg = localStorage.getItem('lastBackground');
     const hasCompletedTutorial = localStorage.getItem('hasCompletedTutorial') === 'true';
+    const bgKeys = Object.keys(backgroundMap);
 
-    if (lastBg === initialBg) {
-      const bgKeys = Object.keys(backgroundMap);
+    let nextBg = initialBg;
+    if (lastBg && lastBg === initialBg && bgKeys.length > 1) {
       const availableBgs = bgKeys.filter(bg => bg !== lastBg);
-      const newBg = availableBgs[Math.floor(Math.random() * availableBgs.length)];
-      setCurrentBg(newBg);
+      nextBg = availableBgs[Math.floor(Math.random() * availableBgs.length)] || initialBg;
     }
 
-    // Only show tutorial if user hasn't completed it before
+    if (nextBg !== initialBg) {
+      setCurrentBg(nextBg);
+    }
+    localStorage.setItem('lastBackground', nextBg);
+
     if (!hasCompletedTutorial) {
       setShowTutorial(true);
     }
-
-    localStorage.setItem('lastBackground', currentBg);
-  }, [initialBg, backgroundMap, currentBg]);
+    // eslint-disable-next-line react-hooks/exhaustive-deps -- intentionally mount-only
+  }, []);
 
   // Spotlight keyboard shortcut (Cmd/Ctrl + K), help overlay (?), and Mission Control (Ctrl/Cmd+Up or F3)
   useEffect(() => {
@@ -265,17 +292,27 @@ export default function Desktop({ initialBg, backgroundMap }: AppLayoutProps) {
                 setVideoLoaded(true);
                 setVideoError(null);
               }}
+              onCanPlay={() => {
+                setVideoLoaded(true);
+                setVideoError(null);
+              }}
+              onPlaying={() => {
+                setVideoLoaded(true);
+              }}
               onError={e => {
                 console.error('Video background failed to load:', currentBackground.src);
                 console.error('Video element error:', e);
                 setVideoError('视频加载失败');
-                setShowToast('背景视频加载失败，已切换到图片背景');
-                // Fallback to first image background if video fails
-                const firstImageBg = Object.entries(backgroundMap).find(
-                  ([_, bg]) => bg.type === 'image'
+                // Fallback to another video (images list may be empty)
+                const fallback = Object.entries(backgroundMap).find(
+                  ([key, bg]) => key !== currentBg && (bg.type === 'image' || bg.type === 'video')
                 );
-                if (firstImageBg) {
-                  setCurrentBg(firstImageBg[0]);
+                if (fallback) {
+                  setShowToast('背景加载失败，已切换到备用背景');
+                  setCurrentBg(fallback[0]);
+                  localStorage.setItem('lastBackground', fallback[0]);
+                } else {
+                  setShowToast('背景视频加载失败');
                 }
               }}
             >
