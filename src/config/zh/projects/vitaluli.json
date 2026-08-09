@@ -1,0 +1,17 @@
+{
+  "id": "vitaluli",
+  "title": "Vitaluli",
+  "description": "个人活力操作系统（Personal Vitality OS），负责身体、心智与个人状态管理；内部包含 Physuli（身体智能）与 Animuli（心智智能）。",
+  "repoUrl": "https://github.com/trueLoving/Vitaluli",
+  "techStack": ["TypeScript", "React"],
+  "highlights": [
+    "Vitality 产品线：个人活力操作系统",
+    "Physuli：身体指标、训练、恢复、营养",
+    "Animuli：情绪、反思、心智练习",
+    "以核心能力验证为第一目标的 MVP"
+  ],
+  "images": [],
+  "productLine": "vitality",
+  "lifecycle": "mvp",
+  "currentState": "项目启动"
+}

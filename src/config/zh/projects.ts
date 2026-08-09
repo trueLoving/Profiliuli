@@ -1,14 +1,34 @@
 /**
- * Projects configuration (Chinese)
- * Import all project JSON files here
+ * 项目配置 — 按 Uli Ecosystem 生命周期排序：
+ * Active → MVP → Maintained → Merged
  */
 
 import type { Project } from '../../types';
 
-import asair from './projects/asair.json';
 import pixuli from './projects/pixuli.json';
-import stationuli from './projects/stationuli.json';
+import readuli from './projects/readuli.json';
+import omnivuli from './projects/omnivuli.json';
+import calluli from './projects/calluli.json';
+import vireuli from './projects/vireuli.json';
+import rootuli from './projects/rootuli.json';
+import vitaluli from './projects/vitaluli.json';
 import profiliuli from './projects/profiliuli.json';
+import asair from './projects/asair.json';
+import stationuli from './projects/stationuli.json';
 
-export const projects: readonly Project[] = [asair, pixuli, stationuli, profiliuli] as Project[];
-
+export const projects: readonly Project[] = [
+  // 🟢 Active
+  pixuli,
+  readuli,
+  omnivuli,
+  calluli,
+  vireuli,
+  rootuli,
+  // 🟡 MVP
+  vitaluli,
+  // 🔵 Maintained
+  profiliuli,
+  // 🔀 Merged
+  asair,
+  stationuli,
+] as Project[];

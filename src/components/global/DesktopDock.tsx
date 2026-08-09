@@ -1,33 +1,45 @@
 import { useState, useEffect, useRef } from 'react';
-import { BsGithub, BsFilePdf, BsStickyFill, BsLinkedin, BsGrid3X3 } from 'react-icons/bs';
+import {
+  BsGithub,
+  BsFilePdf,
+  BsStickyFill,
+  BsLinkedin,
+  BsBook,
+  BsClock,
+} from 'react-icons/bs';
 import { IoIosCall, IoIosMail } from 'react-icons/io';
 import { FaLink } from 'react-icons/fa';
 import ResumeViewer from './ResumeViewer';
 import { useUserConfig } from '../../config/hooks';
 import { RiTerminalFill } from 'react-icons/ri';
 import { useI18n } from '../../i18n/context';
+import type { AppId } from '../../types';
 
 interface DesktopDockProps {
   onTerminalClick: () => void;
-  onNotesClick: () => void;
+  onAboutClick: () => void;
   onGitHubClick: () => void;
-  onSystemAppsClick: () => void;
+  onHandbookClick: () => void;
+  onNowClick: () => void;
   activeApps: {
     terminal: boolean;
-    notes: boolean;
+    about: boolean;
     github: boolean;
     resume: boolean;
     spotify: boolean;
+    handbook: boolean;
+    now: boolean;
     systemApps: boolean;
   };
-  focusedApp?: 'terminal' | 'notes' | 'github' | 'resume' | 'systemApps' | null;
+  focusedApp?: AppId | null;
 }
 
 const DesktopDock = ({
   onTerminalClick,
-  onNotesClick,
+  onAboutClick,
   onGitHubClick,
-  onSystemAppsClick,
+  onHandbookClick,
+  onNowClick,
   activeApps,
   focusedApp,
 }: DesktopDockProps) => {
@@ -51,8 +63,6 @@ const DesktopDock = ({
   const handleCloseResume = () => {
     setShowResume(false);
   };
-
-  // Email is handled via Contact widget now; direct mail link remains in Links popup
 
   useEffect(() => {
     function handleClickOutside(event: MouseEvent) {
@@ -85,18 +95,6 @@ const DesktopDock = ({
       document.removeEventListener('mouseleave', handleMouseLeave);
     };
   }, []);
-
-  const _calculateScale = (iconIndex: number, totalIcons: number) => {
-    if (mouseX === null || !dockRef.current) return 1;
-    const rect = dockRef.current.getBoundingClientRect();
-    const iconWidth = rect.width / totalIcons;
-    const iconCenter = rect.left + iconIndex * iconWidth + iconWidth / 2;
-    const distance = Math.abs(mouseX - iconCenter);
-    const maxDistance = iconWidth * 2;
-    if (distance > maxDistance) return 1;
-    const proximity = 1 - distance / maxDistance;
-    return 1 + proximity * 0.4; // Scale up to 1.4x
-  };
 
   const Tooltip = ({ text }: { text: string }) => (
     <div className="absolute -top-8 left-1/2 transform -translate-x-1/2 bg-black/80 text-white px-2 py-1 rounded text-sm whitespace-nowrap">
@@ -152,17 +150,6 @@ const DesktopDock = ({
             <span>{t('toolbar.juejin')}</span>
           </a>
         )}
-        {userConfig.social.dailydev && (
-          <a
-            href={userConfig.social.dailydev}
-            target="_blank"
-            rel="noopener noreferrer"
-            className="flex items-center gap-2 text-gray-300 hover:text-white"
-          >
-            <span className="text-lg font-bold">d</span>
-            <span>{t('toolbar.dailydev')}</span>
-          </a>
-        )}
         <a
           href={`mailto:${userConfig.contact.email}`}
           className="flex items-center gap-2 text-gray-300 hover:text-white"
@@ -194,13 +181,31 @@ const DesktopDock = ({
       isFocused: focusedApp === 'github',
     },
     {
-      id: 'notes',
-      label: t('dock.notes'),
-      onClick: onNotesClick,
+      id: 'about',
+      label: t('dock.about'),
+      onClick: onAboutClick,
       icon: BsStickyFill,
       color: 'from-yellow-600 to-yellow-400',
-      active: activeApps.notes,
-      isFocused: focusedApp === 'notes',
+      active: activeApps.about,
+      isFocused: focusedApp === 'about',
+    },
+    {
+      id: 'handbook',
+      label: t('dock.handbook'),
+      onClick: onHandbookClick,
+      icon: BsBook,
+      color: 'from-blue-600 to-blue-400',
+      active: activeApps.handbook,
+      isFocused: focusedApp === 'handbook',
+    },
+    {
+      id: 'now',
+      label: t('dock.now'),
+      onClick: onNowClick,
+      icon: BsClock,
+      color: 'from-emerald-600 to-emerald-400',
+      active: activeApps.now,
+      isFocused: focusedApp === 'now',
     },
     {
       id: 'resume',
@@ -211,7 +216,6 @@ const DesktopDock = ({
       active: activeApps.resume,
       isFocused: focusedApp === 'resume',
     },
-    // TODO: Add system apps
     {
       id: 'links',
       label: t('dock.links'),
@@ -240,11 +244,10 @@ const DesktopDock = ({
       >
         <div ref={dockRef} className="bg-gray-600/50 backdrop-blur-sm rounded-2xl p-2 shadow-xl">
           <div className="flex space-x-2" role="menubar">
-            {icons.map((item, _index) => {
+            {icons.map(item => {
               const Icon = item.icon;
-              // Use default scale to avoid accessing refs during render
-              // Scale animation is handled by CSS transforms based on mouse position
               const scale = 1;
+              void mouseX;
               return (
                 <button
                   key={item.id}
@@ -275,18 +278,13 @@ const DesktopDock = ({
                           : ''
                     }`}
                   >
-                    <Icon
-                      size={item.id === 'links' ? 30 : 35}
-                      className="text-white"
-                    />
-                    {/* Active indicator: small dot at bottom */}
+                    <Icon size={item.id === 'links' ? 30 : 35} className="text-white" />
                     {item.active && !item.isFocused && (
                       <span
                         className="absolute -bottom-1 left-1/2 -translate-x-1/2 w-2 h-2 bg-white rounded-full"
                         aria-hidden="true"
                       />
                     )}
-                    {/* Focused indicator: brighter ring (already handled by ring-2 ring-blue-400 above) */}
                   </div>
                   {hoveredIcon === item.id && <Tooltip text={item.label} />}
                   {item.id === 'links' && showLinksPopup && <LinksPopup />}

@@ -1,0 +1,17 @@
+{
+  "id": "omnivuli",
+  "title": "Omnivuli",
+  "description": "AI Runtime 与智能应用平台：多租户 AI、RAG、Agent、Workflow 与共享智能能力。",
+  "repoUrl": "https://github.com/trueLoving/Omnivuli",
+  "techStack": ["TypeScript", "Python", "FastAPI", "RAG", "Agent"],
+  "highlights": [
+    "Uli Ecosystem 的 Intelligence 核心层",
+    "AI Runtime、多租户 AI、RAG、Agent 与 Workflow",
+    "吸收 ASAIR 的商业 AI Runtime 能力",
+    "为其他 Uli 产品提供共享智能底座"
+  ],
+  "images": [],
+  "productLine": "intelligence",
+  "lifecycle": "active",
+  "currentState": "持续开发"
+}

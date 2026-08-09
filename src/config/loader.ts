@@ -15,24 +15,28 @@ import { contact } from './en/contact';
 import { projects as enProjects } from './en/projects';
 import { projects as zhProjects } from './zh/projects';
 import { spotify } from './en/apps';
-import { articles as enArticles } from './en/articles';
-import { articles as zhArticles } from './zh/articles';
 
 // Localized configs for English
 import { personal as enPersonal } from './en/personal';
+import { about as enAbout } from './en/about';
 import { education as enEducation, courses as enCourses } from './en/education';
 import { experience as enExperience } from './en/experience';
 import { skills as enSkills, skillsByCategory as enSkillsByCategory } from './en/skills';
 import { seo as enSeo, theme as enTheme } from './en/site';
 import { resume as enResume } from './en/apps';
+import { handbook as enHandbook } from './en/handbook';
+import { now as enNow } from './en/now';
 
 // Localized configs for Chinese
 import { personal as zhPersonal } from './zh/personal';
+import { about as zhAbout } from './zh/about';
 import { education as zhEducation, courses as zhCourses } from './zh/education';
 import { experience as zhExperience } from './zh/experience';
 import { skills as zhSkills, skillsByCategory as zhSkillsByCategory } from './zh/skills';
 import { seo as zhSeo, theme as zhTheme } from './zh/site';
 import { resume as zhResume } from './zh/apps';
+import { handbook as zhHandbook } from './zh/handbook';
+import { now as zhNow } from './zh/now';
 
 /**
  * Get user configuration based on locale
@@ -41,6 +45,7 @@ import { resume as zhResume } from './zh/apps';
  */
 export function getUserConfig(locale: Locale = 'en'): UserConfig {
   const isZh = locale === 'zh-CN';
+  const handbook = isZh ? zhHandbook : enHandbook;
 
   return {
     // Personal Information
@@ -60,13 +65,16 @@ export function getUserConfig(locale: Locale = 'en'): UserConfig {
     theme: isZh ? zhTheme : enTheme,
 
     // Content (localized)
+    about: isZh ? zhAbout : enAbout,
     education: isZh ? zhEducation : enEducation,
     courses: isZh ? zhCourses : enCourses,
     skills: isZh ? zhSkills : enSkills,
     skillsByCategory: isZh ? zhSkillsByCategory : enSkillsByCategory,
     experience: isZh ? zhExperience : enExperience,
     projects: isZh ? zhProjects : enProjects,
-    articles: isZh ? zhArticles : enArticles,
+    handbook,
+    articles: handbook,
+    now: isZh ? zhNow : enNow,
   } as const;
 }
 

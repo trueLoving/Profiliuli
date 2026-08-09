@@ -1,4 +1,4 @@
-import { useEffect, useState } from 'react';
+import { useEffect, useMemo, useState } from 'react';
 import {
   FaGithub,
   FaExternalLinkAlt,
@@ -9,8 +9,16 @@ import {
 } from 'react-icons/fa';
 import { useUserConfig } from '../../config/hooks';
 import { useI18n } from '../../i18n/context';
-import type { Project } from '../../types';
+import type { Project, ProjectLifecycle } from '../../types';
 import DraggableWindow from './DraggableWindow';
+
+const LIFECYCLE_ORDER: ProjectLifecycle[] = [
+  'active',
+  'mvp',
+  'maintained',
+  'merged',
+  'archived',
+];
 
 interface GitHubViewerProps {
   isOpen: boolean;
@@ -39,7 +47,6 @@ const GitHubViewer = ({ isOpen, onClose, selectedProjectId, onFocus }: GitHubVie
 
   /** Detect video URL type and return embed src for iframe, or null for direct <video> */
   const getDemoVideoEmbed = (url: string): { type: 'direct'; src: string } | { type: 'youtube' | 'vimeo'; embedSrc: string } => {
-    const lower = url.toLowerCase();
     const youtubeMatch = url.match(/(?:youtube\.com\/watch\?v=|youtu\.be\/)([a-zA-Z0-9_-]+)/);
     if (youtubeMatch) {
       return { type: 'youtube', embedSrc: `https://www.youtube.com/embed/${youtubeMatch[1]}` };
@@ -95,6 +102,145 @@ const GitHubViewer = ({ isOpen, onClose, selectedProjectId, onFocus }: GitHubVie
     }
   }, [selectedProjectId, isOpen, userConfig.projects]);
 
+  const projectGroups = useMemo(() => {
+    const groups = LIFECYCLE_ORDER.map(key => ({ key, projects: [] as Project[] }));
+    for (const project of userConfig.projects) {
+      const lifecycle = project.lifecycle || 'archived';
+      const group = groups.find(g => g.key === lifecycle);
+      if (group) group.projects.push(project);
+    }
+    return groups.filter(g => g.projects.length > 0);
+  }, [userConfig.projects]);
+
+  const mergedTargetTitle = (id?: string) =>
+    userConfig.projects.find(p => p.id === id)?.title || id;
+
+  const renderProjectCard = (project: Project) => (
+    <div
+      key={project.id}
+      className="bg-gray-800/50 p-4 rounded-lg cursor-pointer transition-colors hover:bg-gray-700/50 focus:outline-none focus:ring-2 focus:ring-white/30"
+      onClick={() => handleProjectClick(project)}
+      tabIndex={0}
+      onKeyDown={e => {
+        if (e.key === 'Enter') {
+          e.preventDefault();
+          handleProjectClick(project);
+        }
+        if (e.key === ' ') {
+          e.preventDefault();
+          setQuickLook(project);
+        }
+      }}
+    >
+      {project.images && project.images.length > 0 && (
+        <div className="relative w-full h-48 mb-3 overflow-hidden rounded-lg bg-gray-700/50">
+          {!imageLoadStates[`${project.id}-0`] && (
+            <div className="absolute inset-0 animate-pulse bg-gray-700/50" />
+          )}
+          <img
+            src={project.images[0].url}
+            alt={project.images[0].alt}
+            className={`w-full h-full object-cover transition-opacity duration-300 ${
+              imageLoadStates[`${project.id}-0`] ? 'opacity-100' : 'opacity-0'
+            }`}
+            loading="lazy"
+            decoding="async"
+            onLoad={() => setImageLoadStates(prev => ({ ...prev, [`${project.id}-0`]: true }))}
+          />
+          <button
+            className="absolute bottom-2 right-2 text-xs bg-black/75 text-white border border-white/30 rounded px-2 py-1 hover:bg-black/90 shadow-md z-10"
+            onClick={e => {
+              e.stopPropagation();
+              setQuickLook(project);
+            }}
+          >
+            {t('projects.quickLook')}
+          </button>
+        </div>
+      )}
+      <div className="flex flex-wrap items-center gap-2 mb-2">
+        <h3 className="text-xl font-semibold text-gray-200">{project.title}</h3>
+        <span className="text-xs px-2 py-0.5 rounded bg-blue-900/60 text-blue-200">
+          {t(`projects.productLine.${project.productLine}`)}
+        </span>
+        <span className="text-xs px-2 py-0.5 rounded bg-gray-700 text-gray-300">
+          {t(`projects.lifecycle.${project.lifecycle}`)}
+        </span>
+      </div>
+      {project.currentState && (
+        <p className="text-xs text-gray-500 mb-2">{project.currentState}</p>
+      )}
+      {project.lifecycle === 'merged' && project.mergedInto && (
+        <p className="text-xs text-amber-300/90 mb-2">
+          {t('projects.mergedInto')}: {mergedTargetTitle(project.mergedInto)}
+        </p>
+      )}
+      <p className="text-gray-400 mb-2">{project.description}</p>
+      <div className="flex flex-wrap gap-2 mb-2">
+        {project.techStack.map(tech => (
+          <span
+            key={tech}
+            className="px-3 py-1.5 bg-gray-700/50 rounded-lg text-xs text-gray-200 border border-gray-600/50"
+          >
+            {tech}
+          </span>
+        ))}
+      </div>
+      <div className="flex flex-wrap gap-4">
+        {project.repoUrl && (
+          <a
+            href={project.repoUrl}
+            target="_blank"
+            rel="noopener noreferrer"
+            className="flex items-center gap-2 text-sm hover:text-blue-400 text-gray-300"
+            onClick={e => e.stopPropagation()}
+          >
+            <FaGithub />
+            <span>{t('projects.repository')}</span>
+          </a>
+        )}
+        {project.liveUrl && (
+          <a
+            href={project.liveUrl}
+            target="_blank"
+            rel="noopener noreferrer"
+            className="flex items-center gap-2 text-sm hover:text-blue-400 text-gray-300"
+            onClick={e => e.stopPropagation()}
+          >
+            <FaExternalLinkAlt />
+            <span>{t('projects.liveDemo')}</span>
+          </a>
+        )}
+        {project.designDocUrl && (
+          <a
+            href={project.designDocUrl}
+            target="_blank"
+            rel="noopener noreferrer"
+            className="flex items-center gap-2 text-sm hover:text-amber-400 text-gray-300"
+            onClick={e => e.stopPropagation()}
+          >
+            <FaFileAlt />
+            <span>{t('projects.designDoc')}</span>
+          </a>
+        )}
+        {getDemoVideoList(project).length > 0 && (
+          <button
+            type="button"
+            className="flex items-center gap-2 text-sm hover:text-rose-400 text-gray-300"
+            onClick={e => {
+              e.stopPropagation();
+              setDemoVideoProject(project);
+              setCurrentDemoIndex(0);
+            }}
+          >
+            <FaPlayCircle />
+            <span>{t('projects.demoVideo')}</span>
+          </button>
+        )}
+      </div>
+    </div>
+  );
+
   if (!isOpen) return null;
 
   return (
@@ -114,116 +260,21 @@ const GitHubViewer = ({ isOpen, onClose, selectedProjectId, onFocus }: GitHubVie
           <div className="overflow-y-auto flex-grow min-h-0 p-4 md:p-6">
             {!showStructure ? (
               <>
-                <h2 className="text-2xl font-bold mb-4 text-gray-200">{t('projects.myProjects')}</h2>
-                <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-                  {userConfig.projects.map(project => (
-                    <div
-                      key={project.id}
-                      className="bg-gray-800/50 p-4 rounded-lg cursor-pointer transition-colors hover:bg-gray-700/50 focus:outline-none focus:ring-2 focus:ring-white/30"
-                      onClick={() => handleProjectClick(project)}
-                      tabIndex={0}
-                      onKeyDown={e => {
-                        if (e.key === 'Enter') {
-                          e.preventDefault();
-                          handleProjectClick(project);
-                        }
-                        if (e.key === ' ') {
-                          e.preventDefault();
-                          setQuickLook(project);
-                        }
-                      }}
-                    >
-                      {project.images && project.images.length > 0 && (
-                        <div className="relative w-full h-48 mb-3 overflow-hidden rounded-lg bg-gray-700/50">
-                          {!imageLoadStates[`${project.id}-0`] && (
-                            <div className="absolute inset-0 animate-pulse bg-gray-700/50" />
-                          )}
-                          <img
-                            src={project.images[0].url}
-                            alt={project.images[0].alt}
-                            className={`w-full h-full object-cover transition-opacity duration-300 ${
-                              imageLoadStates[`${project.id}-0`] ? 'opacity-100' : 'opacity-0'
-                            }`}
-                            loading="lazy"
-                            decoding="async"
-                            onLoad={() =>
-                              setImageLoadStates(prev => ({ ...prev, [`${project.id}-0`]: true }))
-                            }
-                          />
-                          <button
-                            className="absolute bottom-2 right-2 text-xs bg-black/75 text-white border border-white/30 rounded px-2 py-1 hover:bg-black/90 shadow-md z-10"
-                            onClick={e => {
-                              e.stopPropagation();
-                              setQuickLook(project);
-                            }}
-                          >
-                            {t('projects.quickLook')}
-                          </button>
-                        </div>
-                      )}
-                      <h3 className="text-xl font-semibold mb-2 text-gray-200">{project.title}</h3>
-                      <p className="text-gray-400 mb-2">{project.description}</p>
-                      <div className="flex flex-wrap gap-2 mb-2">
-                        {project.techStack.map(tech => (
-                          <span
-                            key={tech}
-                            className="px-3 py-1.5 bg-gray-700/50 rounded-lg text-xs text-gray-200 border border-gray-600/50"
-                          >
-                            {tech}
-                          </span>
-                        ))}
+                <h2 className="text-2xl font-bold mb-2 text-gray-200">{t('projects.myProjects')}</h2>
+                <p className="text-gray-400 mb-6">{t('projects.subtitle')}</p>
+                <div className="space-y-8">
+                  {projectGroups.map(group => (
+                    <section key={group.key}>
+                      <h3 className="text-lg font-semibold text-gray-200 mb-1">
+                        {t(`projects.lifecycle.${group.key}`)}
+                      </h3>
+                      <p className="text-sm text-gray-500 mb-3">
+                        {t(`projects.lifecycle.${group.key}Description`)}
+                      </p>
+                      <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+                        {group.projects.map(renderProjectCard)}
                       </div>
-                      <div className="flex flex-wrap gap-4">
-                        <a
-                          href={project.repoUrl}
-                          target="_blank"
-                          rel="noopener noreferrer"
-                          className="flex items-center gap-2 text-sm hover:text-blue-400 text-gray-300"
-                          onClick={e => e.stopPropagation()}
-                        >
-                          <FaGithub />
-                          <span>{t('projects.repository')}</span>
-                        </a>
-                        {project.liveUrl && (
-                          <a
-                            href={project.liveUrl}
-                            target="_blank"
-                            rel="noopener noreferrer"
-                            className="flex items-center gap-2 text-sm hover:text-blue-400 text-gray-300"
-                            onClick={e => e.stopPropagation()}
-                          >
-                            <FaExternalLinkAlt />
-                            <span>{t('projects.liveDemo')}</span>
-                          </a>
-                        )}
-                        {project.designDocUrl && (
-                          <a
-                            href={project.designDocUrl}
-                            target="_blank"
-                            rel="noopener noreferrer"
-                            className="flex items-center gap-2 text-sm hover:text-amber-400 text-gray-300"
-                            onClick={e => e.stopPropagation()}
-                          >
-                            <FaFileAlt />
-                            <span>{t('projects.designDoc')}</span>
-                          </a>
-                        )}
-                        {getDemoVideoList(project).length > 0 && (
-                          <button
-                            type="button"
-                            className="flex items-center gap-2 text-sm hover:text-rose-400 text-gray-300"
-                            onClick={e => {
-                              e.stopPropagation();
-                              setDemoVideoProject(project);
-                              setCurrentDemoIndex(0);
-                            }}
-                          >
-                            <FaPlayCircle />
-                            <span>{t('projects.demoVideo')}</span>
-                          </button>
-                        )}
-                      </div>
-                    </div>
+                    </section>
                   ))}
                 </div>
               </>
@@ -241,6 +292,22 @@ const GitHubViewer = ({ isOpen, onClose, selectedProjectId, onFocus }: GitHubVie
                 {selectedProject && (
                   <div className="mb-6 space-y-4">
                     <div>
+                      <div className="flex flex-wrap items-center gap-2 mb-2">
+                        <span className="text-xs px-2 py-0.5 rounded bg-blue-900/60 text-blue-200">
+                          {t(`projects.productLine.${selectedProject.productLine}`)}
+                        </span>
+                        <span className="text-xs px-2 py-0.5 rounded bg-gray-700 text-gray-300">
+                          {t(`projects.lifecycle.${selectedProject.lifecycle}`)}
+                        </span>
+                        {selectedProject.currentState && (
+                          <span className="text-xs text-gray-500">{selectedProject.currentState}</span>
+                        )}
+                        {selectedProject.lifecycle === 'merged' && selectedProject.mergedInto && (
+                          <span className="text-xs text-amber-300/90">
+                            {t('projects.mergedInto')}: {mergedTargetTitle(selectedProject.mergedInto)}
+                          </span>
+                        )}
+                      </div>
                       <div className="flex items-start justify-between gap-4 mb-2">
                         <h3 className="text-2xl font-bold text-gray-200 flex-1">{selectedProject.title}</h3>
                         <div className="flex flex-wrap items-center gap-2 flex-shrink-0">

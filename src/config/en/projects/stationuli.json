@@ -1,13 +1,19 @@
 {
   "id": "stationuli",
   "title": "Stationuli",
-  "description": "Fully offline P2P file transfer and device control solution built with Rust and Tauri",
+  "description": "Offline Link / P2P / multi-device interconnection prototype. Core capabilities merged into Vireuli (Home); repo retained.",
   "repoUrl": "https://github.com/trueLoving/Stationuli",
   "designDocUrl": "https://github.com/trueLoving/Stationuli/tree/main/.github/02-design",
-
   "liveUrl": "https://github.com/trueLoving/Stationuli/releases/tag/v0.0.1",
-  "techStack": ["React", "TypeScript", "Tailwind CSS", "Tauri", "Rust"],
+  "techStack": [
+    "React",
+    "TypeScript",
+    "Tailwind CSS",
+    "Tauri",
+    "Rust"
+  ],
   "highlights": [
+    "🔀 Merged into Vireuli: Device Link, P2P, multi-device interconnection",
     "🔒 Privacy-First: Fully offline, no cloud dependency, end-to-end encrypted",
     "⚡ Performance: <50ms latency using Rust backend and QUIC protocol",
     "📱 Cross-Platform: Desktop (Tauri) and Mobile (React Native) support",
@@ -33,5 +39,9 @@
       "url": "/projects/stationuli/mobile.webp",
       "alt": "stationuli-mobile"
     }
-  ]
+  ],
+  "productLine": "connect",
+  "lifecycle": "merged",
+  "mergedInto": "vireuli",
+  "currentState": "Capabilities migrating to Vireuli"
 }

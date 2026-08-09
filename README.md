@@ -15,7 +15,7 @@
 
 ## About
 
-**Profiliuli** is a modern, interactive portfolio website with a macOS-inspired interface, featuring dynamic video backgrounds and bilingual language support.
+**Profiliuli** is a personal brand hub with a macOS-inspired interface: About (identity & journey), Projects (Uli Ecosystem), Handbook (thinking & essays), and Now (current focus), with bilingual support.
 
 This project is based on [macos-terminal-portfolio](https://github.com/aabdoo23/portfolio), built with Astro, React, and Tailwind CSS.
 
@@ -31,7 +31,8 @@ This project is based on [macos-terminal-portfolio](https://github.com/aabdoo23/
 
 ### 🎯 Core Features
 
-- **macOS-style Interface**: Dock, toolbar, draggable windows, Notes app, GitHub project viewer
+- **Personal Brand Modules**: About (identity/journey/education/experience/skills), Projects (Uli Ecosystem), Handbook, Now
+- **macOS-style Interface**: Dock, toolbar, draggable windows, project viewer
 - **Dynamic Video Backgrounds**: Support for MP4 video wallpapers with automatic playback, loop, and mute
 - **Bilingual Support**: Full English/Chinese language switching with i18n support
 - **Spotlight Search**: Global search with fuzzy matching (Fuse.js), grouped results, and deep-linking

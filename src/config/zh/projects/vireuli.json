@@ -1,0 +1,17 @@
+{
+  "id": "vireuli",
+  "title": "Vireuli",
+  "description": "家庭媒体 OS、多设备互联与家庭数字空间；吸收 Stationuli 的 Device Link 与 P2P 能力。",
+  "repoUrl": "https://github.com/trueLoving/Vireuli",
+  "techStack": ["TypeScript", "Rust", "Tauri"],
+  "highlights": [
+    "Home 产品线：家庭数字空间与设备互联",
+    "家庭媒体 OS，支持多设备连接",
+    "吸收 Stationuli 的 Device Link / P2P 能力",
+    "MVP 已完成并在使用中"
+  ],
+  "images": [],
+  "productLine": "home",
+  "lifecycle": "active",
+  "currentState": "MVP Completed / 使用中"
+}

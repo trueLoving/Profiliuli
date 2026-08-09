@@ -15,9 +15,9 @@
 
 ## 项目简介
 
-**Profiliuli** 是一个采用 Astro、React 和 Tailwind CSS 构建的现代化作品集网站，具有 macOS 风格界面、动态视频背景和双语支持。
+**Profiliuli** 是一个个人品牌中心：About（身份与成长）、Projects（Uli Ecosystem）、Handbook（思想与文章）、Now（当前状态），采用 macOS 风格界面与中英双语。
 
-本项目基于 [macos-terminal-portfolio](https://github.com/aabdoo23/portfolio) 开发。
+本项目基于 [macos-terminal-portfolio](https://github.com/aabdoo23/portfolio) 开发，技术栈为 Astro、React 和 Tailwind CSS。
 
 ### 📛 项目名称：Profiliuli
 
@@ -31,7 +31,8 @@
 
 ### 🎯 核心特性
 
-- **macOS 风格界面**：Dock、工具栏、可拖拽窗口、Notes 应用、GitHub 项目查看器
+- **个人品牌模块**：About（身份/成长/教育/经历/技能）、Projects（Uli Ecosystem）、Handbook、Now
+- **macOS 风格界面**：Dock、工具栏、可拖拽窗口、项目查看器
 - **动态视频背景**：支持 MP4 视频作为桌面壁纸，自动播放、循环、静音
 - **双语支持**：完整的中英文切换，所有 UI 和内容都支持多语言
 - **全局搜索**：Spotlight 搜索功能，支持模糊匹配和深度链接

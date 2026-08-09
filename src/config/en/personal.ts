@@ -7,11 +7,11 @@ import type { PersonalInfo } from '../../types';
 
 export const personal: PersonalInfo = {
   name: 'trueLoving',
-  role: 'FrontEnd & Full-Stack Developer | Rust • Web3 • AI Enthusiast',
+  role: 'Personal Brand Hub · Builder of the Uli Ecosystem',
   location: 'Hangzhou, China',
   email: 'starsky.zhanglinjie@gmail.com',
-  website: 'Professional Portfolio',
+  website: 'Profiliuli',
   roleFocus:
-    'Passionate developer with 3+ years of experience building scalable web applications and cross-platform solutions. Specialized in modern frontend frameworks (React, Vue.js), full-stack development (NestJS), and emerging technologies (Rust, Web3, AI). Proven track record of delivering high-performance applications across desktop (Electron, Tauri), mobile (React Native), and web platforms.',
+    'I build long-term product systems and share how I think. Profiliuli is my personal brand hub: About for identity and growth, Projects for the Uli Ecosystem, Handbook for engineering and product thinking. Currently focused on AI-assisted building, cross-platform architecture, and compounding product lines.',
   yearOfBirth: 1999,
 };

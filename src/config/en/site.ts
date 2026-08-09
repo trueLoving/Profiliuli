@@ -5,26 +5,22 @@
 import type { SEOConfig, ThemeConfig } from '../../types';
 
 export const seo: SEOConfig = {
-  title: 'trueLoving - FrontEnd & Full-Stack Developer | React • Vue.js • Rust • Web3 • AI',
+  title: 'trueLoving · Profiliuli — Personal Brand Hub',
   description:
-    'Experienced FrontEnd & Full-Stack Developer with 3+ years building scalable web applications. Expert in React, Vue.js, NestJS, Electron, React Native, Tauri, Rust, Web3, and AI. Specialized in cross-platform development and performance optimization.',
+    'Profiliuli is trueLoving’s personal brand hub: identity and journey, Uli Ecosystem projects, and Handbook thinking on engineering, architecture, and product.',
   keywords: [
-    'FrontEnd Developer',
-    'Full-Stack Developer',
-    'React Developer',
-    'Vue.js Developer',
-    'Rust Developer',
-    'Web3 Developer',
+    'Profiliuli',
+    'Personal Brand Hub',
+    'Uli Ecosystem',
+    'trueLoving',
+    'Handbook',
     'Cross-Platform Developer',
-    'Electron Developer',
-    'Tauri Developer',
-    'React Native Developer',
-    'NestJS Developer',
-    'TypeScript Developer',
-    'Performance Optimization',
-    'WebAssembly',
-    'Hangzhou Developer',
-    'China Developer',
+    'AI Builder',
+    'Product Architecture',
+    'React',
+    'Rust',
+    'Tauri',
+    'Hangzhou',
   ],
   openGraph: {
     type: 'website',
@@ -36,7 +32,7 @@ export const seo: SEOConfig = {
 };
 
 export const theme: ThemeConfig = {
-  primaryColor: '#1ED760', // Spotify green
+  primaryColor: '#1ED760',
   secondaryColor: '#1d1d1f',
   accentColor: '#007AFF',
 };

@@ -1,12 +1,19 @@
 {
   "id": "stationuli",
   "title": "Stationuli",
-  "description": "完全离线的 P2P 文件传输和设备控制解决方案，使用 Rust 和 Tauri 构建",
+  "description": "Device Link / P2P / 多设备互联原型；核心能力已合并至 Vireuli（Home），仓库保留。",
   "repoUrl": "https://github.com/trueLoving/Stationuli",
   "liveUrl": "https://github.com/trueLoving/Stationuli/releases/tag/v0.0.1",
   "designDocUrl": "https://github.com/trueLoving/Stationuli/tree/main/.github/02-design",
-  "techStack": ["React", "TypeScript", "Tailwind CSS", "Tauri", "Rust"],
+  "techStack": [
+    "React",
+    "TypeScript",
+    "Tailwind CSS",
+    "Tauri",
+    "Rust"
+  ],
   "highlights": [
+    "🔀 已合并至 Vireuli：Device Link、P2P、多设备互联能力",
     "🔒 隐私优先：完全离线，无云依赖，端到端加密",
     "⚡ 性能卓越：使用 Rust 后端和 QUIC 协议，延迟 <50ms",
     "📱 跨平台：支持桌面（Tauri）和移动端（React Native）",
@@ -32,5 +39,9 @@
       "url": "/projects/stationuli/mobile.webp",
       "alt": "stationuli-mobile"
     }
-  ]
+  ],
+  "productLine": "connect",
+  "lifecycle": "merged",
+  "mergedInto": "vireuli",
+  "currentState": "能力迁移至 Vireuli"
 }

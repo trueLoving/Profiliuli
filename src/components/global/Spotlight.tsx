@@ -21,11 +21,15 @@ export interface SpotlightProps {
   onClose: () => void;
   actions: {
     openTerminal: () => void;
-    openNotes: () => void;
-    openNotesSection: (section: 'education' | 'experience' | 'courses' | 'skills') => void;
+    openAbout: () => void;
+    openAboutSection: (
+      section: 'identity' | 'education' | 'experience' | 'skills' | 'journey'
+    ) => void;
     openGitHub: () => void;
     openResume: () => void;
-    openArticles?: () => void;
+    openHandbook?: () => void;
+    openHandbookEntry?: (id: string) => void;
+    openNow?: () => void;
     openSystemApps?: () => void;
     showTutorial: () => void;
     closeAllWindows: () => void;
@@ -75,7 +79,7 @@ export default function Spotlight({ isOpen, onClose, actions }: SpotlightProps) 
       category: t('spotlight.categories.experience'),
       keywords: [e.company, e.location, ...(e.technologies ?? [])],
       icon: <IoBookOutline className="text-gray-300" />,
-      action: () => actions.openNotesSection('experience'),
+      action: () => actions.openAboutSection('experience'),
     }));
 
     const educationItems: SpotlightItem[] = userConfig.education.map((ed, idx) => ({
@@ -85,7 +89,7 @@ export default function Spotlight({ isOpen, onClose, actions }: SpotlightProps) 
       category: t('spotlight.categories.education'),
       keywords: [ed.institution, ed.location ?? '', ed.major ?? ''],
       icon: <IoBookOutline className="text-gray-300" />,
-      action: () => actions.openNotesSection('education'),
+      action: () => actions.openAboutSection('education'),
     }));
 
     const skillItems: SpotlightItem[] = userConfig.skills.map((s, idx) => ({
@@ -93,7 +97,18 @@ export default function Spotlight({ isOpen, onClose, actions }: SpotlightProps) 
       title: s,
       category: t('spotlight.categories.skills'),
       icon: <IoSearch className="text-gray-300" />,
-      action: () => actions.openNotesSection('skills'),
+      action: () => actions.openAboutSection('skills'),
+    }));
+
+    const handbookItems: SpotlightItem[] = (userConfig.handbook || []).map(entry => ({
+      id: `handbook:${entry.id}`,
+      title: entry.title,
+      subtitle: entry.description,
+      category: t('spotlight.categories.handbook'),
+      keywords: [...entry.tags, entry.category],
+      icon: <FaRegFileAlt className="text-gray-300" />,
+      action: () =>
+        actions.openHandbookEntry ? actions.openHandbookEntry(entry.id) : actions.openHandbook?.(),
     }));
 
     const quickActions: SpotlightItem[] = [
@@ -106,28 +121,28 @@ export default function Spotlight({ isOpen, onClose, actions }: SpotlightProps) 
         action: actions.openTerminal,
       },
       {
-        id: 'action:notes-experience',
-        title: t('spotlight.actions.openNotesExperience'),
-        subtitle: t('spotlight.actions.openNotesExperienceSubtitle'),
+        id: 'action:about-experience',
+        title: t('spotlight.actions.openAboutExperience'),
+        subtitle: t('spotlight.actions.openAboutExperienceSubtitle'),
         category: t('spotlight.categories.actions'),
         icon: <IoBookOutline className="text-gray-300" />,
-        action: () => actions.openNotesSection('experience'),
+        action: () => actions.openAboutSection('experience'),
       },
       {
-        id: 'action:notes-education',
-        title: t('spotlight.actions.openNotesEducation'),
-        subtitle: t('spotlight.actions.openNotesEducationSubtitle'),
+        id: 'action:about-education',
+        title: t('spotlight.actions.openAboutEducation'),
+        subtitle: t('spotlight.actions.openAboutEducationSubtitle'),
         category: t('spotlight.categories.actions'),
         icon: <IoBookOutline className="text-gray-300" />,
-        action: () => actions.openNotesSection('education'),
+        action: () => actions.openAboutSection('education'),
       },
       {
-        id: 'action:notes',
-        title: t('spotlight.actions.openNotes'),
-        subtitle: t('spotlight.actions.openNotesSubtitle'),
+        id: 'action:about',
+        title: t('spotlight.actions.openAbout'),
+        subtitle: t('spotlight.actions.openAboutSubtitle'),
         category: t('spotlight.categories.actions'),
         icon: <IoBookOutline className="text-gray-300" />,
-        action: actions.openNotes,
+        action: actions.openAbout,
       },
       {
         id: 'action:close-all',
@@ -225,15 +240,27 @@ export default function Spotlight({ isOpen, onClose, actions }: SpotlightProps) 
         icon: <IoDocumentTextOutline className="text-gray-300" />,
         action: actions.openResume,
       },
-      ...(actions.openArticles
+      ...(actions.openHandbook
         ? [
             {
-              id: 'action:articles',
-              title: 'Open Articles',
-              subtitle: 'Browse my recent articles',
-              category: 'Actions',
+              id: 'action:handbook',
+              title: t('spotlight.actions.openHandbook'),
+              subtitle: t('spotlight.actions.openHandbookSubtitle'),
+              category: t('spotlight.categories.actions'),
               icon: <FaRegFileAlt className="text-gray-300" />,
-              action: actions.openArticles,
+              action: actions.openHandbook,
+            },
+          ]
+        : []),
+      ...(actions.openNow
+        ? [
+            {
+              id: 'action:now',
+              title: t('spotlight.actions.openNow'),
+              subtitle: t('spotlight.actions.openNowSubtitle'),
+              category: t('spotlight.categories.actions'),
+              icon: <FaRegFileAlt className="text-gray-300" />,
+              action: actions.openNow,
             },
           ]
         : []),
@@ -311,7 +338,14 @@ export default function Spotlight({ isOpen, onClose, actions }: SpotlightProps) 
       },
     ];
 
-    return [...quickActions, ...projectItems, ...expItems, ...educationItems, ...skillItems];
+    return [
+      ...quickActions,
+      ...projectItems,
+      ...handbookItems,
+      ...expItems,
+      ...educationItems,
+      ...skillItems,
+    ];
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [actions, t, userConfig]);
 
@@ -330,7 +364,7 @@ export default function Spotlight({ isOpen, onClose, actions }: SpotlightProps) 
   }, [items]);
 
   const results = useMemo<SpotlightItem[]>(() => {
-    const pinnedIds = ['action:terminal', 'action:notes'];
+    const pinnedIds = ['action:terminal', 'action:about'];
     if (!query.trim()) {
       const base = items.slice(0, 8);
       // Ensure pinned are first when empty query

@@ -1,0 +1,17 @@
+{
+  "id": "readuli",
+  "title": "Readuli",
+  "description": "阅读体验平台（Reading Experience Platform），负责 PDF/EPUB 阅读、批注、知识输入与数字阅读体验。",
+  "repoUrl": "https://github.com/trueLoving/Readuli",
+  "techStack": ["TypeScript", "React"],
+  "highlights": [
+    "Media 产品线下的阅读体验平台",
+    "以 PDF / EPUB 阅读与批注为核心循环",
+    "连接 Pixuli 资产与 Omnivuli 智能的知识输入层",
+    "长期主线产品"
+  ],
+  "images": [],
+  "productLine": "media",
+  "lifecycle": "active",
+  "currentState": "MVP 开发"
+}

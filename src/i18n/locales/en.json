@@ -63,6 +63,7 @@
     "noResults": "No results found",
     "categories": {
       "projects": "Projects",
+      "handbook": "Handbook",
       "experience": "Experience",
       "education": "Education",
       "skills": "Skills",
@@ -71,27 +72,49 @@
     "actions": {
       "openTerminal": "Open Terminal",
       "openTerminalSubtitle": "Ask questions or run commands",
-      "openNotesExperience": "Open Notes: Experience",
-      "openNotesExperienceSubtitle": "Jump to professional experience",
-      "openNotesEducation": "Open Notes: Education",
-      "openNotesEducationSubtitle": "Jump to education",
-      "openNotes": "Open Notes",
-      "openNotesSubtitle": "Education, Experience, Skills",
+      "openAboutExperience": "Open About: Experience",
+      "openAboutExperienceSubtitle": "Jump to professional experience",
+      "openAboutEducation": "Open About: Education",
+      "openAboutEducationSubtitle": "Jump to education",
+      "openAbout": "Open About",
+      "openAboutSubtitle": "Identity, Journey, Education, Experience, Skills",
+      "openHandbook": "Open Handbook",
+      "openHandbookSubtitle": "Thinking artifacts and essays",
+      "openNow": "Open Now",
+      "openNowSubtitle": "What I'm focused on right now",
       "closeAllWindows": "Close all windows",
-      "closeAllWindowsSubtitle": "Hide Notes, GitHub, Resume, Terminal",
+      "closeAllWindowsSubtitle": "Hide About, Projects, Handbook, Resume, Terminal",
       "shuffleBackground": "Shuffle Background",
       "shuffleBackgroundSubtitle": "Change desktop wallpaper",
       "chooseBackground": "Choose Background",
       "chooseBackgroundSubtitle": "Pick a wallpaper from the list"
     }
   },
-  "notes": {
-    "title": "Notes",
+  "about": {
+    "title": "About",
+    "subtitle": "Who I am, how I grew, and what I bring",
     "backToMenu": "Back to Menu",
     "sections": {
+      "identity": "Identity",
+      "journey": "Journey",
       "education": "Education",
       "experience": "Professional Experience",
       "skills": "Skills"
+    },
+    "identity": {
+      "title": "Identity",
+      "values": "Values",
+      "focus": "Current Focus"
+    },
+    "journey": {
+      "title": "Journey",
+      "subtitle": "Career growth and product evolution",
+      "categories": {
+        "career": "Career",
+        "product": "Product",
+        "learning": "Learning",
+        "milestone": "Milestone"
+      }
     },
     "education": {
       "title": "Education",
@@ -100,7 +123,8 @@
       "year": "Year",
       "location": "Location",
       "major": "Major",
-      "description": "Description"
+      "description": "Description",
+      "relevantCourses": "Relevant Courses"
     },
     "experience": {
       "title": "Professional Experience",
@@ -109,7 +133,8 @@
       "period": "Period",
       "location": "Location",
       "description": "Description",
-      "technologies": "Technologies"
+      "technologies": "Technologies",
+      "achievements": "Key Achievements"
     },
     "skills": {
       "title": "Skills",
@@ -133,6 +158,8 @@
       }
     },
     "menu": {
+      "identityDescription": "Background, values, and current focus",
+      "journeyDescription": "Career growth and product evolution timeline",
       "educationDescription": "View my educational background and qualifications",
       "experienceDescription": "Explore my professional work experience",
       "skillsDescription": "See my technical skills and expertise"
@@ -143,12 +170,40 @@
       "next": "Next image"
     }
   },
+  "handbook": {
+    "title": "Handbook",
+    "myHandbook": "Handbook",
+    "subtitle": "Engineering thinking, product decisions, and essays",
+    "noEntries": "No handbook entries yet.",
+    "minRead": "min read",
+    "categories": {
+      "all": "All",
+      "engineering": "Engineering",
+      "architecture": "Architecture",
+      "product-thinking": "Product Thinking",
+      "decision-records": "Decision Records",
+      "lessons-learned": "Lessons Learned",
+      "philosophy": "Philosophy",
+      "articles": "Articles"
+    }
+  },
+  "now": {
+    "title": "Now",
+    "updatedAt": "Updated",
+    "kinds": {
+      "building": "Building",
+      "learning": "Learning",
+      "reading": "Reading",
+      "focus": "Focus"
+    }
+  },
   "dock": {
     "terminal": "Terminal",
-    "notes": "Notes",
-    "github": "GitHub",
+    "about": "About",
+    "github": "Projects",
     "resume": "Resume (PDF)",
-    "articles": "Articles",
+    "handbook": "Handbook",
+    "now": "Now",
     "contact": "Contact",
     "links": "Links",
     "systemApps": "System Apps"
@@ -192,8 +247,9 @@
     "missionControl": "Mission Control"
   },
   "projects": {
-    "title": "GitHub Projects",
-    "myProjects": "My Projects",
+    "title": "Projects",
+    "myProjects": "Uli Ecosystem",
+    "subtitle": "Long-term personal digital ecosystem across Media, Intelligence, Communication, Home, Heritage, Vitality, and Identity",
     "backToProjects": "Back to Projects",
     "highlights": "✨ Highlights",
     "technicalChallenges": "🎯 Technical Challenges",
@@ -208,6 +264,31 @@
     "openRepo": "Open Repo",
     "openLive": "Open Live",
     "designDoc": "Design Doc",
-    "demoVideo": "Demo Video"
+    "demoVideo": "Demo Video",
+    "mergedInto": "Merged into",
+    "productLine": {
+      "media": "Media",
+      "intelligence": "Intelligence",
+      "communication": "Communication",
+      "home": "Home",
+      "heritage": "Heritage",
+      "vitality": "Vitality",
+      "identity": "Identity",
+      "connect": "Connect",
+      "dev": "Dev",
+      "lab": "Lab"
+    },
+    "lifecycle": {
+      "active": "Active",
+      "activeDescription": "Long-term mainlines with continuous investment",
+      "mvp": "MVP",
+      "mvpDescription": "Validating core capabilities before long-term evolution",
+      "maintained": "Maintained",
+      "maintainedDescription": "Kept available and synced; no large feature expansion",
+      "merged": "Merged",
+      "mergedDescription": "Repos kept; core capabilities moved into other products",
+      "archived": "Archived",
+      "archivedDescription": "Stopped evolving; retained for history and reference"
+    }
   }
 }
