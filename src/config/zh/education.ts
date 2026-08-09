@@ -24,7 +24,7 @@ export const education: readonly Education[] = [
     ],
     images: [
       {
-        url: 'https://www.hznu.edu.cn/upload/resources/image/2021/08/10/7657092.jpg',
+        url: '/experiences/HZNU.webp',
         alt: '杭州师范大学',
         description: '杭州师范大学校园',
       },
